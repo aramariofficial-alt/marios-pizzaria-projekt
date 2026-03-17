@@ -10,6 +10,12 @@ public class OrderLine {
         return pizza.getPrice() * quantity;
     }
     public String toString(){
-        return String.format("%s %d %d %2f", this.pizza.getName(), this.quantity, pizza.getPrice(), getTotal());
+        return String.format("""
+                Pizza: %s
+                Pris: %d kr.
+                Stk: %d
+                Total: %.2f kr.
+                
+                """, this.pizza.getName(), pizza.getPrice(),this.quantity, getTotal());
     }
 }
