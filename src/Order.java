@@ -1,10 +1,16 @@
+import java.time.LocalTime;
 import java.util.ArrayList;
 
 public class Order {
     ArrayList<OrderLine> list = new ArrayList<>();
+    LocalTime bestillingstidspunkt = LocalTime.now();
     boolean isReady;
     boolean isPaid;
-    boolean isComplete;
+    //boolean isComplete; //når pizzaen isReady && isPaid
+
+    public Order() {
+        bestillingstidspunkt = LocalTime.now();
+    }
 
     public void addOrderline(OrderLine orderLine){
         list.add(orderLine);
@@ -18,12 +24,27 @@ public class Order {
         return total;
     }
 
+    public void setReady() {
+        isReady = true;
+    }
+
+    public void setPaid() {
+        isPaid = true;
+    }
+
+    public boolean isComplete() {
+        return isPaid && isReady;
+    }
+
+
 
     public String toString(){
         return String.format("""
                 %s
                 ----
-                TOTAL: %.2f""",list,getTotal());
+                TOTAL: %.2f
+                Bestilt kl: %s""",list,getTotal(), bestillingstidspunkt );
+
     }
 
 }
