@@ -6,8 +6,6 @@ public class Order {
     LocalTime timeOfOrder = LocalTime.now();
     boolean isReady;
     boolean isPaid;
-    //
-    //boolean isComplete; //når pizzaen isReady && isPaid
 
     public Order() {
         timeOfOrder = LocalTime.now();
