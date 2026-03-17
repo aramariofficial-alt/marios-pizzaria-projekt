@@ -3,13 +3,13 @@ import java.util.ArrayList;
 
 public class Order {
     ArrayList<OrderLine> list = new ArrayList<>();
-    LocalTime bestillingstidspunkt = LocalTime.now();
+    LocalTime timeOfOrder = LocalTime.now();
     boolean isReady;
     boolean isPaid;
     //boolean isComplete; //når pizzaen isReady && isPaid
 
     public Order() {
-        bestillingstidspunkt = LocalTime.now();
+        timeOfOrder = LocalTime.now();
     }
 
     public void addOrderline(OrderLine orderLine){
@@ -43,7 +43,7 @@ public class Order {
                 %s
                 ----
                 TOTAL: %.2f
-                Bestilt kl: %s""",list,getTotal(), bestillingstidspunkt );
+                Bestilt kl: %s""",list,getTotal(), timeOfOrder );
 
     }
 
