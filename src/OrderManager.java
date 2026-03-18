@@ -18,7 +18,7 @@ public class OrderManager {
 
 //     Overblik over alle aktive ordrer
 //     Skal indeholde quantiy, getPizzaName, getTimeofOrder. Eksempel: 3 x Hawai     Bestilt kl: 20:30
-//    public String getKitchenView() {
+//    public String viewActiveOrders() {
 //
 //    }
 
@@ -27,7 +27,7 @@ public class OrderManager {
 //     3 x pizzaName
 //     2 x pizzaName
 //     og til sidst total amount: (samlet indtægt fra alle ordrer)
-//    public String getSummaryView() {
+//    public String viewOrderSummary() {
 //    }
 
 }
