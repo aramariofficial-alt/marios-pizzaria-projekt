@@ -1,4 +1,5 @@
 import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.time.format.DateTimeFormatter;
 
@@ -8,6 +9,7 @@ public class Order {
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
     boolean isReady;
     boolean isPaid;
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
 
     public void addOrderline(OrderLine orderLine) {
         list.add(orderLine);
