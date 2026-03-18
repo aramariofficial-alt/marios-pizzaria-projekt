@@ -18,6 +18,7 @@ public class Order {
     public LocalTime getTimeOfOrder() {
         return timeOfOrder;
     }
+
     public double getTotal() {
         double total = 0;
         for (OrderLine line : list) {
@@ -57,6 +58,7 @@ public class Order {
                 timeOfOrder.format(formatter)
         );
     }
+}
 
 //    vores forrige toString
 //    public String toString(){  //
@@ -68,4 +70,4 @@ public class Order {
 //
 //    }
 
-}
+

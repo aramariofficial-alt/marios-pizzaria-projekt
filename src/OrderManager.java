@@ -10,10 +10,10 @@ public class OrderManager {
     }
 
 
-    public ArrayList<Order> completedOrders(){
+    public ArrayList<Order> completedOrders() {
         ArrayList<Order> completedOrders = new ArrayList<>();
-        for (Order order : orders){
-            if (order.isComplete()){
+        for (Order order : orders) {
+            if (order.isComplete()) {
                 completedOrders.add(order);
             }
         }
@@ -21,16 +21,17 @@ public class OrderManager {
         return completedOrders;
     }
 
-    public ArrayList<Order> activeOrders(){
+    public ArrayList<Order> activeOrders() {
         ArrayList<Order> activeOrders = new ArrayList<>();
-        for (Order order : orders){
-            if (!order.isComplete()){
+        for (Order order : orders) {
+            if (!order.isComplete()) {
                 activeOrders.add(order);
             }
         }
 
         return activeOrders;
     }
+}
 
 
 
@@ -56,4 +57,3 @@ public class OrderManager {
 //    public String viewOrderSummary() {
 //    }
 
-}

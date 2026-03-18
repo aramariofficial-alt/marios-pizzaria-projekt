@@ -15,13 +15,14 @@ public class Pizza {
     public String getIngredients() {
         return ingredients;
     }
+}
 
 //    @Override
 //    public String toString() {
 //        return String.format();
 //    }
 
-}
+
 
 //VESUVIO(1, "Vesuvio", "tomatsauce, ost, skinke og oregano", 57),
 //AMERIKANER(2,"Amerikaner", "tomatsauce, ost, oksefars og oregano",53),
