@@ -1,15 +1,41 @@
 import java.util.ArrayList;
-import java.util.Iterator;
 
 public class OrderManager {
 
-    private ArrayList<Order> activeOrders = new ArrayList<>();
-    private ArrayList<Order> orderSummary = new ArrayList<>();
+    private ArrayList<Order> orders = new ArrayList<>();
 
     // Tilføj ordre til aktive
     public void addOrder(Order order) {
-        activeOrders.add(order);
+        orders.add(order);
     }
+
+
+    public ArrayList<Order> completedOrders(){
+        ArrayList<Order> completedOrders = new ArrayList<>();
+        for (Order order : orders){
+            if (order.isComplete()){
+                completedOrders.add(order);
+            }
+        }
+
+        return completedOrders;
+    }
+
+    public ArrayList<Order> activeOrders(){
+        ArrayList<Order> activeOrders = new ArrayList<>();
+        for (Order order : orders){
+            if (!order.isComplete()){
+                activeOrders.add(order);
+            }
+        }
+
+        return activeOrders;
+    }
+
+
+
+
+
 
 //    Flyt færdige ordrer til summary
 //    public void updateOrders() {

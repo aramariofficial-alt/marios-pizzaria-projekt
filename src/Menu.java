@@ -2,10 +2,10 @@ import java.util.ArrayList;
 
 public class Menu {
 
-    static ArrayList<Pizza> menu = new ArrayList<>();
+    static ArrayList<Product> menu = new ArrayList<>();
 
-    public static void addPizza(Pizza pizza){
-        menu.add(pizza);
+    public static void addPizza(Product product){
+        menu.add(product);
 
     }
 

@@ -1,25 +1,28 @@
 public class OrderLine {
     private int quantity;
-    private Pizza pizza;
+    private final Product product;
 
-    public OrderLine(int quantity, Pizza pizza){
+    public OrderLine(int quantity, Product product){
         this.quantity = quantity;
-        this.pizza = pizza;
+        this.product = product;
     }
     public double getTotal(){
-        return pizza.getPrice() * quantity;
+        return product.getPrice() * quantity;
     }
 
     public int getQuantity() {
         return quantity;
     }
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
 
-    public Pizza getPizza() {
-        return pizza;
+    public Product getPizza() {
+        return product;
     }
 
     public String toString(){
         return String.format("""
-                %d X %s %.2f kr.""", this.quantity, this.pizza.getName(), getTotal());
+                %d X %s: %.2f kr.""", this.quantity, product.getPizza(), getTotal());
     }
 }

@@ -1,9 +1,11 @@
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
 
 public class Order {
     ArrayList<OrderLine> list = new ArrayList<>();
     LocalTime timeOfOrder = LocalTime.now();
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
     boolean isReady;
     boolean isPaid;
 
@@ -50,7 +52,7 @@ public class Order {
                         Bestilt kl: %s""",
                 sb.toString(),
                 getTotal(),
-                timeOfOrder
+                timeOfOrder.format(formatter)
         );
     }
 
