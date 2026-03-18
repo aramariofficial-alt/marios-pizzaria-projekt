@@ -14,16 +14,19 @@ public class Pizza {
 
     public String getIngredients() {
         return ingredients;
-    }
-}
 
+    }
+//    Bør vi have en toString i klassen?⬇️
 //    @Override
 //    public String toString() {
 //        return String.format();
 //    }
+}
 
 
 
+
+//noter
 //VESUVIO(1, "Vesuvio", "tomatsauce, ost, skinke og oregano", 57),
 //AMERIKANER(2,"Amerikaner", "tomatsauce, ost, oksefars og oregano",53),
 //CACCIATORE(3,"Cacciatore","tomatsauce, ost, pepperoni og oregano", 57),

@@ -4,7 +4,6 @@ public class OrderManager {
 
     private ArrayList<Order> orders = new ArrayList<>();
 
-    // Tilføj ordre til aktive
     public void addOrder(Order order) {
         orders.add(order);
     }
@@ -31,6 +30,26 @@ public class OrderManager {
 
         return activeOrders;
     }
+
+    //forbundet med printCompletedOrders i Main. Indsamlet total pizzaquantity for alle ordrer og returnerer værdien
+    public int getTotalPizzasSold(){
+        int total = 0;
+        for (Order order : orders){
+            total += order.getQuantity();
+        }
+        return total;
+    }
+    //forbundet med printCompletedOrders i Main.
+    public double getTotalIncome(){
+        double total = 0;
+        for (Order order : completedOrders()){
+            total += order.getTotal();
+        }
+        return total;
+    }
+
+
+
 }
 
 

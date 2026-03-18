@@ -38,6 +38,31 @@ public class Order {
         return isPaid && isReady;
     }
 
+    public String getPizza() {
+        String pizza = "";
+        for (OrderLine orderline : list) {
+            return orderline.getPizza();
+        }
+        return pizza;
+    }
+
+    public int getQuantity() {
+        int quantity = 0;
+        for (OrderLine orderline : list) {
+            quantity += orderline.getQuantity();
+        }
+        return quantity;
+    }
+
+    public String getOrderLinesInOrder(){
+        String h = "";
+        for (OrderLine line : list){
+            h += line.getQuantity() + " x " + line.getPizza() + "\n";
+        }
+
+        return h;
+    }
+
 
     @Override  //toString metode som fjerner "[ , ]" fra konsollen når ordren udprintes. chat har lavet den
     public String toString() {
@@ -51,22 +76,11 @@ public class Order {
                         %s
                         ----
                         TOTAL: %.2f
-                        Bestilt kl: %s""",
+                        Bestilt kl: %s%n""",
                 sb.toString(),
                 getTotal(),
                 timeOfOrder.format(formatter)
         );
     }
 }
-
-//    vores forrige toString
-//    public String toString(){  //
-//        return String.format("""
-//                %s
-//                ----
-//                TOTAL: %.2f
-//                Bestilt kl: %s""",list,getTotal(), timeOfOrder );
-//
-//    }
-
 

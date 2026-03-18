@@ -19,8 +19,8 @@ public class OrderLine {
         this.quantity = quantity;
     }
 
-    public Product getPizza() {
-        return product;
+    public String getPizza() {
+        return product.getPizza();
     }
 
     public String toString() {
