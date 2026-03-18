@@ -9,13 +9,17 @@ public class OrderLine {
     public double getTotal(){
         return pizza.getPrice() * quantity;
     }
+
+    public int getQuantity() {
+        return quantity;
+    }
+
+    public Pizza getPizza() {
+        return pizza;
+    }
+
     public String toString(){
         return String.format("""
-                Pizza: %s
-                Pris: %d kr.
-                Stk: %d
-                Total: %.2f kr.
-                
-                """, this.pizza.getName(), pizza.getPrice(),this.quantity, getTotal());
+                %d X %s %.2f kr.""", this.quantity, this.pizza.getName(), getTotal());
     }
 }

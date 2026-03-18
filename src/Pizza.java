@@ -28,7 +28,6 @@ public enum Pizza {
     this.price = price;
 
 
-
     }
     public int getNumber() {
         return number;
@@ -44,6 +43,12 @@ public enum Pizza {
 
     public int getPrice() {
         return price;
+    }
+
+    public static void printMenu(){
+        for(Pizza pizza : Pizza.values()){
+            System.out.println(pizza);
+        }
     }
 
     //1. Pizzaname pris
