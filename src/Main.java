@@ -14,7 +14,7 @@ public class Main {
                 ("amerikaner", "skinke, ost"), 49));
         OrderLine orderline2 = new OrderLine(2, new Product(new Pizza
                 ("vesuvio", "peperoni, ost"), 49));
-        OrderLine orderline3 = new OrderLine(2, new Product(new Pizza
+        OrderLine orderline3 = new OrderLine(8, new Product(new Pizza
                 ("salat pizza", "salat, kebab"), 49));
 
         order.addOrderline(orderline);
@@ -88,10 +88,13 @@ public class Main {
 
 
 
-// noter
-//        Menu menu = buildMenu();
-//        private static Menu buildMenu() {
-//        Menu menu = new Menu();
-//
-//        return menu;
-//    }
+ /*
+ noter
+        Menu menu = buildMenu();
+        private static Menu buildMenu() {
+        Menu menu = new Menu();
+
+        return menu;
+    }
+
+  */
