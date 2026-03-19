@@ -35,7 +35,9 @@ public class OrderManager {
     public int getTotalPizzasSold(){
         int total = 0;
         for (Order order : orders){
+            if(order.isComplete()){
             total += order.getQuantity();
+        }
         }
         return total;
     }
