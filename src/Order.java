@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter;
 public class Order {
     ArrayList<OrderLine> list = new ArrayList<>();
     LocalTime timeOfOrder = LocalTime.now();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
     boolean isReady;
     boolean isPaid;
 
