@@ -4,15 +4,19 @@ public class Menu {
 
     static ArrayList<Product> menu = new ArrayList<>();
 
-    public static void addPizza(Product product){
+    public static void addPizza(Product product) {
         menu.add(product);
 
     }
 
-    public String toString(){
-       return String.format("""
-                %s
-                """, menu);
-    }
+    @Override
+    public String toString() {
+        String result = "";
 
+        for (Product p : menu) {
+            result += p.getPizza() + " - " + p.getPrice() + " kr\n";
+        }
+
+        return result;
+    }
 }

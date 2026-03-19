@@ -20,9 +20,10 @@ public class Product {
     public int getPrice() {
         return price;
     }
-//    Bør vi have en toString i klassen?⬇️
-//    @Override
-//    public String toString() {
-//        return String.format();
-//    }
+
+    @Override
+    public String toString() {
+        return String.format("""
+                %s - %d,-%n""", pizza.getName(), getPrice());
+    }
 }

@@ -1,16 +1,23 @@
 import java.time.LocalTime;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
 
         OrderManager orderManager = new OrderManager();
+        Scanner scanner = new Scanner(System.in);
 
-        // Order 1 (har pickup)
+        buildMenu();
+        printMenu();
+        //System.out.println("Welcome" + "\n" + " Press one ");
+
+
         Order order = new Order();
         order.addOrderline(new OrderLine(3, new Product(new Pizza("hawai", "skinke"), 49)));
         order.addOrderline(new OrderLine(1, new Product(new Pizza("vesuvio", "ost"), 49)));
         order.setPaid();
+
         order.addPickUpTime(18, 30);
 
         // Order 2 (har pickup)
@@ -101,4 +108,30 @@ public class Main {
                 orderManager.getTotalIncome(),
                 orderManager.getTotalPizzasSold());
     }
+
+    private static void buildMenu() {
+
+        Menu.addPizza(new Product(new Pizza("Vesuvio", "tomatsauce, ost, skinke og oregano"), 57));
+        Menu.addPizza(new Product(new Pizza("Amerikaner", "tomatsauce, ost, oksefars og oregano"), 53));
+        Menu.addPizza(new Product(new Pizza("Cacciatore", "tomatsauce, ost, pepperoni og oregano"), 57));
+        Menu.addPizza(new Product(new Pizza("Carbona", "tomatsauce, ost, kødsauce, spaghetti, cocktailpølser og oregano"), 63));
+        Menu.addPizza(new Product(new Pizza("Dennis", "tomatsauce, ost, skinke, pepperoni, cocktailpølser og oregano"), 65));
+        Menu.addPizza(new Product(new Pizza("Bertil", "tomatsauce, ost, bacon og oregano"), 57));
+        Menu.addPizza(new Product(new Pizza("Silvia", "tomatsauce, ost, pepperoni, rød peber, løg, oliven og oregano"), 61));
+        Menu.addPizza(new Product(new Pizza("Victoria", "tomatsauce, ost, skinke, ananas, champignon, løg og oregano"), 61));
+        Menu.addPizza(new Product(new Pizza("Toronfo", "tomatsauce, ost, skinke, bacon, kebab, chili og oregano"), 61));
+        Menu.addPizza(new Product(new Pizza("Capriciosa", "tomatsauce, ost, skinke, champignon og oregano"), 61));
+        Menu.addPizza(new Product(new Pizza("Hawai", "tomatsauce, ost, skinke, ananas og oregano"), 61));
+        Menu.addPizza(new Product(new Pizza("Le Blissola", "tomatsauce, ost, skinke, rejer og oregano"), 61));
+        Menu.addPizza(new Product(new Pizza("Venezia", "tomatsauce, ost, skinke, bacon og oregano"), 61));
+        Menu.addPizza(new Product(new Pizza("Mafia", "tomatsauce, ost, pepperoni, bacon, løg og oregano"), 61));
+    }
+    private static void printMenu() {
+        System.out.println(new Menu());
+    }
+
 }
+
+
+
+
