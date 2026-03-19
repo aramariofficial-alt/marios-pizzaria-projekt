@@ -6,6 +6,7 @@ import java.time.format.DateTimeFormatter;
 public class Order {
     ArrayList<OrderLine> list = new ArrayList<>();
     LocalTime timeOfOrder = LocalTime.now();
+    LocalTime pickUpTime;
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
     boolean isReady;
     boolean isPaid;
@@ -14,8 +15,20 @@ public class Order {
         list.add(orderLine);
     }
 
+    public LocalTime addPickUpTime(int hour, int minute){
+
+        return  this.pickUpTime = LocalTime.of(hour,minute);
+    }
+
     public LocalTime getTimeOfOrder() {
         return timeOfOrder;
+    }
+
+    public LocalTime getEffectivePickUpTime() {
+        if (pickUpTime == null) {
+            return timeOfOrder.plusMinutes(15);
+        }
+        return pickUpTime;
     }
 
     public double getTotal() {

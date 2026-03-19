@@ -1,109 +1,104 @@
-import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class Main {
     public static void main(String[] args) {
 
-        Order order = new Order();
-        Order order1 = new Order();
         OrderManager orderManager = new OrderManager();
 
-        OrderLine orderline = new OrderLine(3, new Product(new Pizza
-                ("hawai", "skinke"), 49));
-        OrderLine orderline1 = new OrderLine(2, new Product(new Pizza
-                ("amerikaner", "skinke, ost"), 49));
-        OrderLine orderline2 = new OrderLine(2, new Product(new Pizza
-                ("vesuvio", "peperoni, ost"), 49));
-        OrderLine orderline3 = new OrderLine(8, new Product(new Pizza
-                ("salat pizza", "salat, kebab"), 49));
-
-        order.addOrderline(orderline);
-        order.addOrderline(orderline1);
-
-        order1.addOrderline(orderline2);
-        order1.addOrderline(orderline3);
-
-        //order.setReady();
+        // Order 1 (har pickup)
+        Order order = new Order();
+        order.addOrderline(new OrderLine(3, new Product(new Pizza("hawai", "skinke"), 49)));
+        order.addOrderline(new OrderLine(1, new Product(new Pizza("vesuvio", "ost"), 49)));
         order.setPaid();
+        order.addPickUpTime(18, 30);
 
-        order1.setReady();
+        // Order 2 (har pickup)
+        Order order1 = new Order();
+        order1.addOrderline(new OrderLine(2, new Product(new Pizza("amerikaner", "ost"), 49)));
+        order1.addOrderline(new OrderLine(2, new Product(new Pizza("pepperoni", "pepperoni"), 49)));
         order1.setPaid();
+        order1.addPickUpTime(18, 15);
 
+        // Order 3 (INGEN pickup → +20 min)
+        Order order2 = new Order();
+        order2.addOrderline(new OrderLine(1, new Product(new Pizza("vesuvio", "ost"), 49)));
+        order2.addOrderline(new OrderLine(3, new Product(new Pizza("salat pizza", "kebab"), 49)));
+        order2.setPaid();
+
+        // Order 4 (INGEN pickup → +20 min)
+        Order order3 = new Order();
+        order3.addOrderline(new OrderLine(4, new Product(new Pizza("pepperoni", "pepperoni"), 49)));
+        order3.addOrderline(new OrderLine(1, new Product(new Pizza("hawai", "skinke"), 49)));
+        order3.setPaid();
+
+        // Order 5 (har pickup)
+        Order order4 = new Order();
+        order4.addOrderline(new OrderLine(2, new Product(new Pizza("salat pizza", "kebab"), 49)));
+        order4.addOrderline(new OrderLine(2, new Product(new Pizza("amerikaner", "ost"), 49)));
+        order4.setPaid();
+        order4.addPickUpTime(18, 0);
+
+        // Tilføj alle ordrer
         orderManager.addOrder(order);
         orderManager.addOrder(order1);
+        orderManager.addOrder(order2);
+        orderManager.addOrder(order3);
+        orderManager.addOrder(order4);
 
-
+        orderManager.removeOrder(order);
         printActiveOrders(orderManager);
-        printCompletedOrders(orderManager);
+
+
     }
 
-
     private static void printActiveOrders(OrderManager orderManager) {
-//      Tjekker først og fremmest om activeOrders arraylisten er tom, hvis ja, returner ingenting/eksekver ikke metoden
+
         if (orderManager.activeOrders().isEmpty()) {
             System.out.println("""
-            ACTIVE ORDERS: 0
-            -------------""");
+                    ACTIVE ORDERS: 0
+                    -------------""");
             return;
         }
-//    Udprinter orderlines i activeOrders listen igennem og udprinter antallet af pizzaer, pizznavne, og bestlingstidpunkt
-        System.out.println("ACTIVE ORDERS:"+"\n"+ "------------");
-        for (Order order : orderManager.activeOrders()) {
-            if (!order.isComplete()) {
-                System.out.println("\n" + order.getOrderLinesInOrder()+ "\n"+"Time of order: " + order.getTimeOfOrder());
 
+        System.out.println("ACTIVE ORDERS:\n------------");
+
+        ArrayList<Order> sortedOrders = new ArrayList<>(orderManager.activeOrders());
+
+        sortedOrders.sort((o1, o2) ->
+                o1.getEffectivePickUpTime().compareTo(o2.getEffectivePickUpTime())
+        );
+
+        for (Order order : sortedOrders) {
+            if (!order.isComplete()) {
+
+                System.out.println("\n" + order.getOrderLinesInOrder()
+                        + "\nTime of order: " + order.getTimeOfOrder()
+                        + "\nPick up time: " + order.getEffectivePickUpTime());
             }
         }
-
     }
 
 
     private static void printCompletedOrders(OrderManager orderManager) {
 
-//        Tjekker først om der er nogen completed orders
         if (orderManager.completedOrders().isEmpty()) {
-            return; // printer INTET
+            return;
         }
 
         System.out.print("""
-                        
-                        COMPLETED ORDERS:
-                        -------------""");
+                
+                COMPLETED ORDERS:
+                -------------""");
 
-//      For eachloop som itererer i completedOrders arraylisten og udprinter hver orderline i listen. quantity x pizza
         for (Order order : orderManager.completedOrders()) {
             System.out.printf("%n%s%n", order.getOrderLinesInOrder());
         }
 
-//      Udskriver den totale pris for alle solgte pizzaer i completeOrders arraylisten.
         System.out.printf("""
                         Total amount: %.2f kr,-%nOrder Summary (Total Pizzas Sold): %d
                         """,
-                orderManager.getTotalIncome(), orderManager.getTotalPizzasSold());
+                orderManager.getTotalIncome(),
+                orderManager.getTotalPizzasSold());
     }
-
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
- /*
- noter
-        Menu menu = buildMenu();
-        private static Menu buildMenu() {
-        Menu menu = new Menu();
-
-        return menu;
-    }
-
-  */

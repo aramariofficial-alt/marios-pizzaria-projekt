@@ -8,18 +8,6 @@ public class OrderManager {
         orders.add(order);
     }
 
-
-    public ArrayList<Order> completedOrders() {
-        ArrayList<Order> completedOrders = new ArrayList<>();
-        for (Order order : orders) {
-            if (order.isComplete()) {
-                completedOrders.add(order);
-            }
-        }
-
-        return completedOrders;
-    }
-
     public ArrayList<Order> activeOrders() {
         ArrayList<Order> activeOrders = new ArrayList<>();
         for (Order order : orders) {
@@ -27,8 +15,23 @@ public class OrderManager {
                 activeOrders.add(order);
             }
         }
-
         return activeOrders;
+    }
+
+    public ArrayList<Order> completedOrders() {
+        ArrayList<Order> completedOrders = new ArrayList<>();
+        for (Order order : orders) {
+            if (order.isComplete()) {
+                completedOrders.add(order);
+
+            }
+        }
+        return completedOrders;
+    }
+
+
+    public void removeOrder(Order order) {
+        orders.remove(order);
     }
 
     //forbundet med printCompletedOrders i Main. Indsamlet total pizzaquantity for alle ordrer og returnerer værdien
@@ -55,24 +58,3 @@ public class OrderManager {
 
 
 }
-
-
-//    Flyt færdige ordrer til summary
-//    public void updateOrders() {
-//
-//    }
-
-//     Overblik over alle aktive ordrer
-//     Skal indeholde quantiy, getPizzaName, getTimeofOrder. Eksempel: 3 x Hawai     Bestilt kl: 20:30
-//    public String viewActiveOrders() {
-//
-//    }
-
-//      Overblik over alle pizzaer som ikke er active
-//     Skal indeholde overskrift "ORDER SUMMARY", Completed orders     total:
-//     3 x pizzaName
-//     2 x pizzaName
-//     og til sidst total amount: (samlet indtægt fra alle ordrer)
-//    public String viewOrderSummary() {
-//    }
-
