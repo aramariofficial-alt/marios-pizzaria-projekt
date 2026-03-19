@@ -86,7 +86,6 @@ public class Main {
         }
     }
 
-
     private static void printCompletedOrders(OrderManager orderManager) {
 
         if (orderManager.completedOrders().isEmpty()) {
@@ -126,6 +125,7 @@ public class Main {
         Menu.addPizza(new Product(new Pizza("Venezia", "tomatsauce, ost, skinke, bacon og oregano"), 61));
         Menu.addPizza(new Product(new Pizza("Mafia", "tomatsauce, ost, pepperoni, bacon, løg og oregano"), 61));
     }
+
     private static void printMenu() {
         System.out.println(new Menu());
     }
