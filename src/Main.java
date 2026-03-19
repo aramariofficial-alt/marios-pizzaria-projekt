@@ -61,19 +61,20 @@ public class Main {
             return; // printer INTET
         }
 
-        System.out.printf("""
-                ORDER SUMMARY
-                ----------------------
-                Completed Orders       Total Pizzas Sold: %d%n""", orderManager.getTotalPizzasSold());
+        System.out.print("""
+                        ORDER SUMMARY
+                        -------------""");
 
 //      For eachloop som itererer i completedOrders arraylisten og udprinter hver orderline i listen. quantity x pizza
         for (Order order : orderManager.completedOrders()) {
-            System.out.printf("%s%n", order.getOrderLinesInOrder());
+            System.out.printf("%n%s%n", order.getOrderLinesInOrder());
         }
 
 //      Udskriver den totale pris for alle solgte pizzaer i completeOrders arraylisten.
-        System.out.printf("Total amount: %.2f kr,-%n",
-                orderManager.getTotalIncome());
+        System.out.printf("""
+                        Total amount: %.2f kr,-%nCompleted Orders (Total Pizzas Sold): %d
+                        """,
+                orderManager.getTotalIncome(), orderManager.getTotalPizzasSold());
     }
 }
 
