@@ -4,20 +4,19 @@ import java.util.ArrayList;
 import java.time.format.DateTimeFormatter;
 
 public class Order {
-    ArrayList<OrderLine> list = new ArrayList<>();
-    LocalTime timeOfOrder = LocalTime.now();
-    LocalTime pickUpTime;
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
-    boolean isReady;
-    boolean isPaid;
+    private final ArrayList<OrderLine> list = new ArrayList<>();
+    private final LocalTime timeOfOrder = LocalTime.now();
+    private LocalTime pickUpTime;
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+    private boolean isReady;
+    private boolean isPaid;
 
     public void addOrderline(OrderLine orderLine) {
         list.add(orderLine);
     }
 
     public LocalTime addPickUpTime(int hour, int minute){
-
-        return  this.pickUpTime = LocalTime.of(hour,minute);
+        return this.pickUpTime = LocalTime.of(hour,minute);
     }
 
     public LocalTime getTimeOfOrder() {

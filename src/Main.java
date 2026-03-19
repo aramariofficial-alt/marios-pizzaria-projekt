@@ -8,16 +8,13 @@ public class Main {
         OrderManager orderManager = new OrderManager();
         Scanner scanner = new Scanner(System.in);
 
-        buildMenu();
-        printMenu();
-        //System.out.println("Welcome" + "\n" + " Press one ");
-
+//        buildMenu();
+//        printMenu();
 
         Order order = new Order();
         order.addOrderline(new OrderLine(3, new Product(new Pizza("hawai", "skinke"), 49)));
         order.addOrderline(new OrderLine(1, new Product(new Pizza("vesuvio", "ost"), 49)));
         order.setPaid();
-
         order.addPickUpTime(18, 30);
 
         // Order 2 (har pickup)
@@ -44,7 +41,7 @@ public class Main {
         order4.addOrderline(new OrderLine(2, new Product(new Pizza("salat pizza", "kebab"), 49)));
         order4.addOrderline(new OrderLine(2, new Product(new Pizza("amerikaner", "ost"), 49)));
         order4.setPaid();
-        order4.addPickUpTime(18, 0);
+        order4.addPickUpTime(20,15);
 
         // Tilføj alle ordrer
         orderManager.addOrder(order);
@@ -53,7 +50,7 @@ public class Main {
         orderManager.addOrder(order3);
         orderManager.addOrder(order4);
 
-        orderManager.removeOrder(order);
+       // orderManager.removeOrder(order);
         printActiveOrders(orderManager);
 
 
@@ -93,7 +90,7 @@ public class Main {
         }
 
         System.out.print("""
-                
+
                 COMPLETED ORDERS:
                 -------------""");
 
