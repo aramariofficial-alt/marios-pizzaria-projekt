@@ -41,6 +41,7 @@ public class OrderManager {
         }
         return total;
     }
+
     //forbundet med printCompletedOrders i Main.
     public double getTotalIncome(){
         double total = 0;
