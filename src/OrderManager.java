@@ -32,32 +32,29 @@ public class OrderManager {
     }
 
     //forbundet med printCompletedOrders i Main. Indsamlet total pizzaquantity for alle ordrer og returnerer værdien
-    public int getTotalPizzasSold(){
+    public int getTotalPizzasSold() {
         int total = 0;
-        for (Order order : orders){
-            if(order.isComplete()){
-            total += order.getQuantity();
-        }
+        for (Order order : orders) {
+            if (order.isComplete()) {
+                total += order.getQuantity();
+            }
         }
         return total;
     }
 
     //forbundet med printCompletedOrders i Main.
-    public double getTotalIncome(){
+    public double getTotalIncome() {
         double total = 0;
-        for (Order order : completedOrders()){
-            total += order.getTotal();
+        for (Order order : orders) {
+            if (order.isComplete()) {
+                total += order.getTotal();
+            }
         }
         return total;
     }
 
 
-
 }
-
-
-
-
 
 
 //    Flyt færdige ordrer til summary
