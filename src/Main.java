@@ -26,7 +26,7 @@ public class Main {
         order.setReady();
         order.setPaid();
 
-        order1.setReady();
+        //order1.setReady();
         order1.setPaid();
 
         orderManager.addOrder(order);
@@ -41,6 +41,7 @@ public class Main {
     private static void printActiveOrders(OrderManager orderManager) {
 //      Tjekker først og fremmest om activeOrders arraylisten er tom, hvis ja, returner ingenting/eksekver ikke metoden
         if (orderManager.activeOrders().isEmpty()) {
+            System.out.println("Ingen aktive ordrer");
             return;
         }
 //    Udprinter orderlines i activeOrders listen igennem og udprinter antallet af pizzaer, pizznavne, og bestlingstidpunkt
@@ -53,9 +54,8 @@ public class Main {
 
     }
 
-
+//ordredato
     private static void printCompletedOrders(OrderManager orderManager) {
-
 //        Tjekker først om der er nogen completed orders
         if (orderManager.completedOrders().isEmpty()) {
             return; // printer INTET
