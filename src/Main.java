@@ -1,3 +1,4 @@
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -23,7 +24,7 @@ public class Main {
         order1.addOrderline(orderline2);
         order1.addOrderline(orderline3);
 
-        order.setReady();
+        //order.setReady();
         order.setPaid();
 
         order1.setReady();
@@ -41,13 +42,17 @@ public class Main {
     private static void printActiveOrders(OrderManager orderManager) {
 //      Tjekker først og fremmest om activeOrders arraylisten er tom, hvis ja, returner ingenting/eksekver ikke metoden
         if (orderManager.activeOrders().isEmpty()) {
+            System.out.println("""
+            ACTIVE ORDERS: 0
+            -------------""");
             return;
         }
 //    Udprinter orderlines i activeOrders listen igennem og udprinter antallet af pizzaer, pizznavne, og bestlingstidpunkt
+        System.out.println("ACTIVE ORDERS:"+"\n"+ "------------");
         for (Order order : orderManager.activeOrders()) {
             if (!order.isComplete()) {
-                System.out.println(order.getOrderLinesInOrder() + "\n" +
-                        "Bestilt kl: " + order.getTimeOfOrder() + "\n");
+                System.out.println("\n" + order.getOrderLinesInOrder()+ "\n"+"Time of order: " + order.getTimeOfOrder());
+
             }
         }
 
@@ -62,7 +67,8 @@ public class Main {
         }
 
         System.out.print("""
-                        ORDER SUMMARY
+                        
+                        COMPLETED ORDERS:
                         -------------""");
 
 //      For eachloop som itererer i completedOrders arraylisten og udprinter hver orderline i listen. quantity x pizza
@@ -72,7 +78,7 @@ public class Main {
 
 //      Udskriver den totale pris for alle solgte pizzaer i completeOrders arraylisten.
         System.out.printf("""
-                        Total amount: %.2f kr,-%nCompleted Orders (Total Pizzas Sold): %d
+                        Total amount: %.2f kr,-%nOrder Summary (Total Pizzas Sold): %d
                         """,
                 orderManager.getTotalIncome(), orderManager.getTotalPizzasSold());
     }
