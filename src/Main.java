@@ -1,9 +1,19 @@
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Scanner;
+import java.time.format.DateTimeFormatter;
 
 public class Main {
     public static void main(String[] args) {
+
+
+        Menu.addPizza(new Product(new Pizza
+                ("hawai", "skinke"), 49));
+        Menu.addPizza(new Product(new Pizza
+                ("amerikaner", "skinke, ost"), 49));
+
+        UserInterface ui = new UserInterface();
+        ui.newOrder();
 
         Order order = new Order();
         Order order1 = new Order();
@@ -27,7 +37,7 @@ public class Main {
         //order.setReady();
         order.setPaid();
 
-        order1.setReady();
+        //order1.setReady();
         order1.setPaid();
 
         orderManager.addOrder(order);
@@ -40,18 +50,24 @@ public class Main {
 
 
     private static void printActiveOrders(OrderManager orderManager) {
-//      Tjekker først og fremmest om activeOrders arraylisten er tom, hvis ja, returner ingenting/eksekver ikke metoden
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+
+//      Tjekker først og fremmest om activeOrders arraylisten er tom,
+//      hvis ja, returner ingenting/eksekver ikke metoden
         if (orderManager.activeOrders().isEmpty()) {
             System.out.println("""
-            ACTIVE ORDERS: 0
+            AKTIVE ORDRER: 0
             -------------""");
             return;
         }
-//    Udprinter orderlines i activeOrders listen igennem og udprinter antallet af pizzaer, pizznavne, og bestlingstidpunkt
-        System.out.println("ACTIVE ORDERS:"+"\n"+ "------------");
+//    Udprinter orderlines i activeOrders listen igennem og udprinter
+//    antallet af pizzaer, pizznavne, og bestlingstidpunkt
+        System.out.println("AKTIVE ORDRER:"+"\n"+ "------------");
         for (Order order : orderManager.activeOrders()) {
             if (!order.isComplete()) {
-                System.out.println("\n" + order.getOrderLinesInOrder()+ "\n"+"Time of order: " + order.getTimeOfOrder());
+                System.out.println("\n" + order.getOrderLinesInOrder()+ "\n" +
+                        "Bestillingstidspunkt: " + order.getTimeOfOrder().format(formatter) +
+                        "\nAfhentningstidspunkt: " + order.getPickupTime().format(formatter));
 
             }
         }
@@ -82,7 +98,6 @@ public class Main {
                         """,
                 orderManager.getTotalIncome(), orderManager.getTotalPizzasSold());
     }
-
 
 }
 

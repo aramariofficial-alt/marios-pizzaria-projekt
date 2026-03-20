@@ -2,17 +2,29 @@ import java.util.ArrayList;
 
 public class Menu {
 
-    static ArrayList<Product> menu = new ArrayList<>();
+    private static ArrayList<Product> menu = new ArrayList<>();
 
     public static void addPizza(Product product){
         menu.add(product);
 
     }
+    public ArrayList<Product> getMenu(){
+        return menu;
+    }
+    public Product chooseMenuNumber(int number){
+        return menu.get(number);
+    }
 
-    public String toString(){
-       return String.format("""
-                %s
-                """, menu);
+    @Override
+    public String toString() {
+        String result = "";
+        int i = 0;
+
+        for (Product p : menu) {
+            result += i++ + ". " + p.getPizza() + " : " + p.getIngredients() + " - " + p.getPrice() + " kr\n";
+        }
+
+        return result;
     }
 
 }

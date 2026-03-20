@@ -1,12 +1,13 @@
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.time.format.DateTimeFormatter;
 
 public class Order {
-    ArrayList<OrderLine> list = new ArrayList<>();
-    LocalTime timeOfOrder = LocalTime.now();
-    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+    private ArrayList<OrderLine> list = new ArrayList<>();
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+    private final LocalTime timeOfOrder = LocalTime.now();
+    private LocalTime pickupTime = timeOfOrder.plusMinutes(15);
+
     boolean isReady;
     boolean isPaid;
 
@@ -16,6 +17,14 @@ public class Order {
 
     public LocalTime getTimeOfOrder() {
         return timeOfOrder;
+    }
+
+    public void setPickupTime(int chosenHour, int chosenMinutes) {
+        this.pickupTime = LocalTime.of(chosenHour, chosenMinutes);
+    }
+
+    public LocalTime getPickupTime() {
+        return pickupTime;
     }
 
     public double getTotal() {
@@ -76,10 +85,11 @@ public class Order {
                         %s
                         ----
                         TOTAL: %.2f
-                        Bestilt kl: %s%n""",
+                        Bestilt kl: %s%n
+                        Afhentningstidspunkt kl: %s""",
                 sb.toString(),
                 getTotal(),
-                timeOfOrder.format(formatter)
+                timeOfOrder.format(formatter), pickupTime.format(formatter)
         );
     }
 }
