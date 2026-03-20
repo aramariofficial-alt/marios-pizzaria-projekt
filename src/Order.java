@@ -88,10 +88,11 @@ public class Order {
                         %s
                         ----
                         TOTAL: %.2f
-                        Bestilt kl: %s%n""",
+                        Bestilt kl: %s%n
+                        Afhentningstidspunkt kl: %s""",
                 sb.toString(),
                 getTotal(),
-                timeOfOrder.format(formatter)
+                timeOfOrder.format(formatter), pickUpTime.format(formatter)
         );
     }
 }

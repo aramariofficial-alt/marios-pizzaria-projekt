@@ -20,10 +20,14 @@ public class Product {
     public int getPrice() {
         return price;
     }
-
+    public String getIngredients(){
+        return pizza.getIngredients();
+    }
+//    Bør vi have en toString i klassen?⬇️
     @Override
     public String toString() {
         return String.format("""
-                %s - %d,-%n""", pizza.getName(), getPrice());
+                %s : %s - %d
+                """, pizza.getName(), pizza.getIngredients(), getPrice());
     }
 }
