@@ -1,30 +1,33 @@
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.time.format.DateTimeFormatter;
 
 public class Order {
-    private ArrayList<OrderLine> list = new ArrayList<>();
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+    private final ArrayList<OrderLine> list = new ArrayList<>();
     private final LocalTime timeOfOrder = LocalTime.now();
-    private LocalTime pickupTime = timeOfOrder.plusMinutes(15);
-
-    boolean isReady;
-    boolean isPaid;
+    private LocalTime pickUpTime;
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+    private boolean isReady;
+    private boolean isPaid;
 
     public void addOrderline(OrderLine orderLine) {
         list.add(orderLine);
+    }
+
+    public LocalTime addPickUpTime(int hour, int minute){
+        return this.pickUpTime = LocalTime.of(hour,minute);
     }
 
     public LocalTime getTimeOfOrder() {
         return timeOfOrder;
     }
 
-    public void setPickupTime(int chosenHour, int chosenMinutes) {
-        this.pickupTime = LocalTime.of(chosenHour, chosenMinutes);
-    }
-
-    public LocalTime getPickupTime() {
-        return pickupTime;
+    public LocalTime getEffectivePickUpTime() {
+        if (pickUpTime == null) {
+            return timeOfOrder.plusMinutes(15);
+        }
+        return pickUpTime;
     }
 
     public double getTotal() {
@@ -89,7 +92,7 @@ public class Order {
                         Afhentningstidspunkt kl: %s""",
                 sb.toString(),
                 getTotal(),
-                timeOfOrder.format(formatter), pickupTime.format(formatter)
+                timeOfOrder.format(formatter), pickUpTime.format(formatter)
         );
     }
 }
