@@ -10,17 +10,15 @@ public class UserInterface {
       //  }
 
         public void start() {
-            buildMenu();
+            menu.buildMenu();
         }
-
-
             public void newOrder() {
                 System.out.println(menu);
 
                 System.out.println("Indtast nummer på pizza? ");
                 int productNumber = scan.nextInt() - 1;
 
-                Product chosenProduct = menu.chooseMenuNumber(productNumber);
+                Product chosenProduct = menu.getPizzaByNumber(productNumber);
 
                 System.out.println("Indtast antal? ");
                 int quantity = scan.nextInt();
