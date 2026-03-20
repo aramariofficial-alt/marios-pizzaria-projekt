@@ -1,4 +1,4 @@
-public class Pizza {
+public class   Pizza {
 
     private final String name;
     private final String ingredients;

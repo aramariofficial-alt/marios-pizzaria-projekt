@@ -27,7 +27,7 @@ public class Menu {
 
         for (int i = 0; i < menu.size(); i++) {
             Product p = menu.get(i);
-            result += (i + 1) + ". " + p.getPizza() + " - " + p.getPrice() + " kr\n";
+            result += (i + 1) + ". " + p.getPizza() + ": " + p.getIngredients() + " - " + p.getPrice() + " kr\n";
         }
 
         return result;

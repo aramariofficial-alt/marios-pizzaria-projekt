@@ -24,6 +24,7 @@ public class Product {
         return pizza.getIngredients();
     }
 //    Bør vi have en toString i klassen?⬇️
+
     @Override
     public String toString() {
         return String.format("""
