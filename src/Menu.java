@@ -18,10 +18,11 @@ public class Menu {
     @Override
     public String toString() {
         String result = "";
-        int i = 0;
+        int i = 1;
 
         for (Product p : menu) {
-            result += i++ + ". " + p.getPizza() + " : " + p.getIngredients() + " - " + p.getPrice() + " kr\n";
+            result += i + ". " + p.getPizza() + " : " + p.getIngredients() + " - " + p.getPrice() + " kr\n";
+        i++;
         }
 
         return result;
