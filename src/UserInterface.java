@@ -1,21 +1,40 @@
-import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserInterface {
    // public static void main(String[] args) {
         private Scanner scan = new Scanner(System.in);
-        private Menu menu = new Menu();
+        private Menu menu;
 
-      //  public UserInterface(){
-      //  }
+        public UserInterface(Menu menu){
+            this.menu = menu;
+
+        }
 
         public void start() {
-            menu.buildMenu();
-        }
-            public void newOrder() {
-                System.out.println(menu);
+           boolean quit = false;
+            while(!quit){
 
-                System.out.println("Indtast nummer på pizza? ");
+               System.out.println("""
+            1. Opret Bestilling
+            2. Aktive Ordrer
+            3. Admin
+            4. Afslut
+            """);
+               int choice = scan.nextInt();
+               switch (choice){
+                   case 1 -> newOrder();
+                   case 2 -> printactiveOrders();
+                   //case 3 -> admin();
+                   case 4 -> quit = true;
+                default -> System.out.println("Ugyldigt nummer, prøv igen: ");
+               }
+            }
+
+        }
+        private void newOrder() {
+
+            System.out.println(menu);
+            System.out.println("Indtast nummer på pizza? ");
                 int productNumber = scan.nextInt() - 1;
 
                 Product chosenProduct = menu.getPizzaByNumber(productNumber);
