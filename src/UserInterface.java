@@ -54,42 +54,32 @@ public class UserInterface {
 
             System.out.println("Tryk 0 for at afslutte bestillingen");
             System.out.println("Tryk 1 for at tilføje flere pizzaer");
-            int choice = scan.nextInt();
-//            switch (choice){
-//                case 0 -> orderDone = true;
-//                case 1 -> {
-//                }
-//                default -> System.out.println("""
-//                        Forkert input
-//                        Tryk 0 for at afslutte bestillingen
-//                        Tryk 1 for at tilføje flere pizzaer""");
-//
-//            }
 
-            boolean validInput = false;
-            while(!validInput) {
-                if (choice > 1) {
-                    validInput = true;
-                }else if (choice == 0) {
+
+            while(true){
+                int choice = scan.nextInt();
+                if(choice == 0) {
                     orderDone = true;
-                } else if (choice == 1) {
-                    validInput = true;
-
+                    break;
+                }else if(choice == 1) {
+                    break;
+                }else{System.out.println("""
+                            Ugyldig indtastning!
+                            Tryk 0 for at afslutte bestillingen
+                            Tryk 1 for at tilføje flere pizzaer""");
                 }
-
             }
         }
 
 
-        }
         orderManager.addOrder(order);
         System.out.println("""
-                Indtast afhentningstidpunkt:
-                Tast 1 for 30 min
-                Tast 2 for 1 time
-                Tast 3 for 1,5 time
-                Tast 4 for 2 timer
+                Afhentningstidpunkt:
+                Tast 0 for hurtigst muligt
+                Tast 1 for at vælge afhentningstispunkt
                 """);
+
+        //Herfra virker det ikke endnu...
 
         order.addPickUpTime(scan.nextInt(), scan.nextInt());
 
