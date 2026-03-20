@@ -1,12 +1,15 @@
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class UserInterface {
     // public static void main(String[] args) {
     private Scanner scan = new Scanner(System.in);
     private Menu menu;
+    private OrderManager orderManager;
 
-    public UserInterface(Menu menu) {
+    public UserInterface(Menu menu, OrderManager orderManager) {
         this.menu = menu;
+        this.orderManager = orderManager;
 
     }
 
@@ -16,25 +19,44 @@ public class UserInterface {
 
             System.out.println("""
                     1. Opret Bestilling
-                    2. Aktive Ordrer
-                    3. Admin
-                    4. Afslut
+                    2. Betal
+                    3. Aktive Ordrer
+                    4. Admin
+                    5. Afslut
                     """);
             int choice = scan.nextInt();
             switch (choice) {
                 case 1 -> newOrder();
-                //case 2 -> printactiveOrders();
+                case 2 -> payOrder();
+                //case 3 printactiveOrders();
                 //case 3 -> admin();
                 case 4 -> quit = true;
                 default -> System.out.println("Ugyldigt nummer, prøv igen: ");
             }
         }
+    }
+
+    private void payOrder(){
+        ArrayList<Order> activeOrders = this.orderManager.activeOrders();
+        System.out.println("Hvilken ordre bliver betalt");
+        System.out.println("0 for at annullere");
+        System.out.println();
+        activeOrders.forEach(order -> {
+            System.out.println(order.getOrderNumberString());
+        });
+        int choice = scan.nextInt();
+        if (choice == 0){
+            return; //annullere betaling
+        }
+        double totalPrice = orderManager.getOrderTotal(choice);
+        System.out.println("Total: " + totalPrice);
+        orderManager.payOrder(choice);
 
     }
 
-    private void newOrder() {
 
-        OrderManager orderManager = new OrderManager();
+
+    private void newOrder() {
         Order order = new Order();
 
         System.out.println(menu);
@@ -43,7 +65,7 @@ public class UserInterface {
         while (!orderDone) {
             System.out.println("Indtast nummer på pizza? ");
             int productNumber = scan.nextInt() - 1;
-            Product chosenProduct = menu.getPizzaByNumber(productNumber);
+            Product chosenProduct = menu.getProductByNumber(productNumber);
 
             System.out.println("Indtast antal? ");
             int quantity = scan.nextInt();
@@ -73,16 +95,29 @@ public class UserInterface {
 
 
         orderManager.addOrder(order);
-        System.out.println("""
-                Afhentningstidpunkt:
-                Tast 0 for hurtigst muligt
-                Tast 1 for at vælge afhentningstispunkt
-                """);
 
-        //Herfra virker det ikke endnu...
 
-        order.addPickUpTime(scan.nextInt(), scan.nextInt());
 
-        System.out.println("Du har bestilt: " + order);
+
+
+
+
+
+
+
+
+
+
+//        System.out.println("""
+//                Afhentningstidpunkt:
+//                Tast 0 for hurtigst muligt
+//                Tast 1 for at vælge afhentningstispunkt
+//                """);
+//
+//        //Herfra virker det ikke endnu...
+//
+//        order.addPickUpTime(scan.nextInt(), scan.nextInt());
+//
+//        System.out.println("Du har bestilt: " + order);
     }
 }

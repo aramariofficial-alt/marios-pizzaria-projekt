@@ -4,18 +4,18 @@ public class Menu {
 
     private final ArrayList<Product> menu = new ArrayList<>();
 
-    public void addPizza(Product product) {
+    public void addProduct(Product product) {
         menu.add(product);
     }
 
-    public Product getPizzaByNumber(int number) {
+    public Product getProductByNumber(int number) {
         if (number < 0 || number >= menu.size()) {
             return null;
         }
         return menu.get(number);
     }
 
-    public int size() {
+    public int getProductCount() {
         return menu.size();
     }
 

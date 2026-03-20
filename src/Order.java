@@ -2,6 +2,7 @@ import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.time.format.DateTimeFormatter;
+import java.lang.String;
 
 public class Order {
     private final ArrayList<OrderLine> list = new ArrayList<>();
@@ -10,6 +11,7 @@ public class Order {
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
     private boolean isReady;
     private boolean isPaid;
+    private int orderNumber;
 
     public void addOrderline(OrderLine orderLine) {
         list.add(orderLine);
@@ -28,6 +30,9 @@ public class Order {
             return timeOfOrder.plusMinutes(15);
         }
         return pickUpTime;
+    }
+    public int getOrderNumber(){
+        return orderNumber;
     }
 
     public double getTotal() {
@@ -74,6 +79,13 @@ public class Order {
 
         return h;
     }
+    public void setOrderNumber(int orderNumber){
+        this.orderNumber = orderNumber;
+
+    }
+    public String getOrderNumberString(){
+        return Integer.toString(this.orderNumber);
+    }
 
 
     @Override  //toString metode som fjerner "[ , ]" fra konsollen når ordren udprintes. chat har lavet den
@@ -91,8 +103,8 @@ public class Order {
                         Bestilt kl: %s%n
                         Afhentningstidspunkt kl: %s""",
                 sb.toString(),
-                getTotal(),
-                timeOfOrder.format(formatter), pickUpTime.format(formatter)
+                getTotal()
+               // timeOfOrder.format(formatter), pickUpTime.format(formatter)
         );
     }
 }

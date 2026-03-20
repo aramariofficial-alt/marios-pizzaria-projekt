@@ -5,7 +5,21 @@ public class OrderManager {
     private ArrayList<Order> orders = new ArrayList<>();
 
     public void addOrder(Order order) {
+        int nextOrderNumber = orders.size() + 1;
+        order.setOrderNumber(nextOrderNumber);
         orders.add(order);
+    }
+    public void payOrder(int orderNumber){
+        for (Order current : orders){
+            if (current.getOrderNumber() == orderNumber){
+                current.setPaid();
+                break;
+            }else {
+                //it was not the right order, so we continue.
+            }
+        }
+
+
     }
 
     public ArrayList<Order> activeOrders() {
@@ -49,13 +63,21 @@ public class OrderManager {
     public double getTotalIncome() {
         double total = 0;
         for (Order order : orders) {
-            if (order.isComplete()) {
+            if (order.isComplete())
                 total += order.getTotal();
             }
-        }
         return total;
     }
 
+    public double getOrderTotal(int orderNumber){
+        double total = 0;
+        for (Order order : orders){
+            if (order.getOrderNumber() == orderNumber){
+                total = order.getTotal();
+                break;
+            }
+        }
 
-
+         return total;
+    }
 }
