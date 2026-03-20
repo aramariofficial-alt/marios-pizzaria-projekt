@@ -29,8 +29,8 @@ public class UserInterface {
                 case 1 -> newOrder();
                 case 2 -> payOrder();
                 //case 3 printactiveOrders();
-                //case 3 -> admin();
-                case 4 -> quit = true;
+                //case 4 -> admin();
+                case 5 -> quit = true;
                 default -> System.out.println("Ugyldigt nummer, prøv igen: ");
             }
         }
