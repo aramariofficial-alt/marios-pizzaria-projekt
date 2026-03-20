@@ -1,7 +1,7 @@
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class UserInterface {
+public class UserInterfaceSkitse {
 
     private final OrderManager orderManager = new OrderManager();
     private final Scanner scanner = new Scanner(System.in);
