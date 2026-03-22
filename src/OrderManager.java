@@ -44,9 +44,10 @@ public class OrderManager {
     }
 
 
-    public void removeOrder(Order order) {
-        orders.remove(order);
+    public void removeIncompleteOrders() {
+        orders.removeIf(order -> !order.isComplete());
     }
+
 
     //forbundet med printCompletedOrders i Main. Indsamlet total pizzaquantity for alle ordrer og returnerer værdien
     public int getTotalPizzasSold() {
@@ -79,5 +80,23 @@ public class OrderManager {
         }
 
          return total;
+    }
+
+        public Order getOrderByNumber(int number){
+               return orders.get(number);
+        }
+
+    public Order getActiveOrderByIndex(int index){
+        ArrayList<Order> active = activeOrders();
+
+        if (index < 0 || index >= active.size()){
+            return null;
+        }
+
+        return active.get(index);
+    }
+
+    public void removeOrder(Order order){
+        orders.remove(order);
     }
 }

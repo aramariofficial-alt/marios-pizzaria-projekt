@@ -1,38 +1,58 @@
-import java.time.LocalTime;
+import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.time.format.DateTimeFormatter;
-import java.lang.String;
 
 public class Order {
     private final ArrayList<OrderLine> list = new ArrayList<>();
-    private final LocalTime timeOfOrder = LocalTime.now();
-    private LocalTime pickUpTime;
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
+    private final LocalDateTime timeOfOrder = LocalDateTime.now();
+    private LocalDateTime pickUpTime;
+
+    private final DateTimeFormatter formatter =
+            DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy");
+
     private boolean isReady;
     private boolean isPaid;
+
+    public boolean isPaid() {
+        return isPaid;
+    }
+
+    public boolean isReady() {
+        return isReady;
+    }
+
     private int orderNumber;
 
     public void addOrderline(OrderLine orderLine) {
         list.add(orderLine);
     }
 
-    public LocalTime addPickUpTime(int hour, int minute){
-        return this.pickUpTime = LocalTime.of(hour,minute);
+    public LocalDateTime addPickUpTime(int hour, int minute) {
+        this.pickUpTime = timeOfOrder.withHour(hour).withMinute(minute);
+        return pickUpTime;
     }
 
-    public LocalTime getTimeOfOrder() {
+    public LocalDateTime getTimeOfOrder() {
         return timeOfOrder;
     }
 
-    public LocalTime getEffectivePickUpTime() {
+    public LocalDateTime getEffectivePickUpTime() {
         if (pickUpTime == null) {
             return timeOfOrder.plusMinutes(15);
         }
         return pickUpTime;
     }
-    public int getOrderNumber(){
+
+    public int getOrderNumber() {
         return orderNumber;
+    }
+
+    public void setOrderNumber(int orderNumber) {
+        this.orderNumber = orderNumber;
+    }
+
+    public String getOrderNumberString() {
+        return Integer.toString(this.orderNumber);
     }
 
     public double getTotal() {
@@ -43,11 +63,11 @@ public class Order {
         return total;
     }
 
-    public void setReady() {  // isReady sættes til true
+    public void setReady() {
         isReady = true;
     }
 
-    public void setPaid() { // isPaid sættes til true
+    public void setPaid() {
         isPaid = true;
     }
 
@@ -56,11 +76,11 @@ public class Order {
     }
 
     public String getPizza() {
-        String pizza = "";
+        String result = "";
         for (OrderLine orderline : list) {
-            return orderline.getPizza();
+            result += orderline.getPizza() + ", ";
         }
-        return pizza;
+        return result;
     }
 
     public int getQuantity() {
@@ -71,24 +91,23 @@ public class Order {
         return quantity;
     }
 
-    public String getOrderLinesInOrder(){
+    public String getOrderLinesInOrder() {
         String h = "";
-        for (OrderLine line : list){
+        for (OrderLine line : list) {
             h += line.getQuantity() + " x " + line.getPizza() + "\n";
         }
-
         return h;
     }
-    public void setOrderNumber(int orderNumber){
-        this.orderNumber = orderNumber;
 
+    public String getActiveOrder(){
+        String h = "";
+        for (OrderLine line : list) {
+            h += line.getQuantity() + " x " + line.getPizza() + "\n";
+        }
+        return h;
     }
-    public String getOrderNumberString(){
-        return Integer.toString(this.orderNumber);
-    }
 
-
-    @Override  //toString metode som fjerner "[ , ]" fra konsollen når ordren udprintes. chat har lavet den
+    @Override
     public String toString() {
         StringBuilder sb = new StringBuilder();
 
@@ -98,14 +117,15 @@ public class Order {
 
         return String.format("""
                         %s
-                        ----
-                        TOTAL: %.2f
-                        Bestilt kl: %s%n
-                        Afhentningstidspunkt kl: %s""",
+                        -----
+                        TOTAL: %.2f kr.
+                        Bestilt: %s
+                        Afhentes: %s
+                        -------------""",
                 sb.toString(),
-                getTotal()
-               // timeOfOrder.format(formatter), pickUpTime.format(formatter)
+                getTotal(),
+                timeOfOrder.format(formatter),
+                getEffectivePickUpTime().format(formatter)
         );
     }
 }
-
