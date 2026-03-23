@@ -1,8 +1,13 @@
+import java.lang.reflect.Array;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class OrderManager {
 
     private ArrayList<Order> orders = new ArrayList<>();
+
+    private final DateTimeFormatter formatter =
+            DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy");
 
 
     public void addOrder(Order order) {
@@ -54,6 +59,20 @@ public class OrderManager {
             }
         }
         return cancelledOrders;
+    }
+
+    public String cancelledOrdersToString(){
+
+        String s = "";
+        ArrayList<Order> cancelledOrders = cancelledOrders();
+
+        for (Order order : cancelledOrders){
+            s+= order.getActiveOrder() + "\n" + "Total: " + order.getTotal() + "kr,-" + "\n\n" + "Bestilt: " +
+                    order.getTimeOfOrder().format(formatter) + "\n" + "Afhentes: " +
+                    order.getEffectivePickUpTime().format(formatter) + "\n\n";
+
+        }
+        return s;
     }
 
 

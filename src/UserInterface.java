@@ -32,7 +32,7 @@ public class UserInterface {
                 case 1 -> newOrder();
                 case 2 -> payOrder();
                 case 3 -> printActiveOrders();
-                //case 4 -> admin();
+                case 4 -> admin();
                 case 5 -> quit = true;
                 default -> System.out.println("Ugyldigt nummer, prøv igen: ");
             }
@@ -154,7 +154,7 @@ public class UserInterface {
             System.out.println("""
                     1. Ordre klar
                     2. Ordre betalt
-                    3. Slet ordre""");
+                    3. Annuller ordre""");
 
             int choice = scan.nextInt();
 
@@ -182,7 +182,7 @@ public class UserInterface {
                         }
                         case 3 -> {
                             chosenOrder.setCancelled();
-                            System.out.println("Ordren blev slettet.");
+                            System.out.println("Ordren blev annulleret.");
                         }
                     }
                 }
@@ -228,7 +228,7 @@ public class UserInterface {
                         2. Vis mest solgte pizza
                         3. Vis antal solgte pizza i alt
                         4. Vis afsluttede ordre
-                        5. Vis Annullerede ordre""");
+                        5. Vis annullerede ordre""");
 
                 int choice2 = scan.nextInt();
 
@@ -247,15 +247,23 @@ public class UserInterface {
 
                     }
                     case 5 -> {
-
+                        if (orderManager.cancelledOrders().isEmpty()){
+                            System.out.println("Ingen annullerede ordrer i systemet på nuværende tidspunkt" + "\n");
+                            break;
+                        }
+                        System.out.println("Anullerede ordrer" + "\n------------" + "\n" +
+                                orderManager.cancelledOrdersToString());
                     }
-                    default -> System.out.println("Fejl i input");
 
+                    default -> System.out.println("Fejl i input");
                 }
+
             }
+
             default -> System.out.println("Fejl i input");
         }
     }
 }
+
 
 
