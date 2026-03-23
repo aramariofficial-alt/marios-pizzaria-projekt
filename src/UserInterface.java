@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.InputMismatchException;
 import java.util.Scanner;
 import java.time.format.DateTimeFormatter;
 
@@ -27,6 +28,8 @@ public class UserInterface {
                     4. Admin
                     5. Afslut
                     """);
+
+            try{
             int choice = scan.nextInt();
             switch (choice) {
                 case 1 -> newOrder();
@@ -35,6 +38,10 @@ public class UserInterface {
                 case 4 -> admin();
                 case 5 -> quit = true;
                 default -> System.out.println("Ugyldigt nummer, prøv igen: ");
+            }
+            }catch (InputMismatchException e){
+                System.out.println("Ugyldigt nummer, prøv igen: ");
+                scan.next();
             }
         }
     }
@@ -85,6 +92,7 @@ public class UserInterface {
                     break;
                 }
                 System.out.println("Fejl i input. Prøv igen");
+
 
             }
 
@@ -166,10 +174,10 @@ public class UserInterface {
 
                     Order chosenOrder = orderManager.getActiveOrderByIndex(answer - 1);
 
-                    if (chosenOrder == null) {
-                        System.out.println("Ugyldigt valg");
-                        return;
-                    }
+//                    if (chosenOrder == null) {
+//                        System.out.println("Ugyldigt valg");
+//                        return;
+//                    }
 
                     switch (choice) {
                         case 1 -> {
@@ -213,13 +221,14 @@ public class UserInterface {
 
         switch (choice) {
             case 1 -> {
-                System.out.println("Hvilken pizza vil du ændre prisen på?");
+                System.out.println(menu);
+                System.out.println("Hvilken pizza nr. vil du ændre prisen på?");
                 int productNumber = scan.nextInt() - 1;
                 Product chosenProduct = menu.getProductByNumber(productNumber);
-                System.out.println("Hvad skal den nye pris være?");
+                System.out.println("Hvad skal den nye pris på " + chosenProduct.getPizza() + " være?");
                 int newPrice = scan.nextInt();
                 chosenProduct.setPrice(newPrice);
-                System.out.println("Pris er ændret");
+                System.out.println("Prisen på " + chosenProduct.getPizza() + " er ændret til " + newPrice + " kr.");
                 System.out.println();
             }
             case 2 -> {
