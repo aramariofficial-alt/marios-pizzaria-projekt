@@ -109,14 +109,6 @@ public class OrderManager {
         return active.get(index);
     }
 
-    public ArrayList<Order> cancelledOrders() {
-        ArrayList<Order> cancelledOrders = new ArrayList<>();
-        for (Order order : orders) {
-            if (order.isCancelled()) {
-                cancelledOrders.add(order);
-            }
-        }
-        return cancelledOrders;
-    }
+
 }
 

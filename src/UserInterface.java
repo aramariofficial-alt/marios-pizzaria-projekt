@@ -181,7 +181,7 @@ public class UserInterface {
                             System.out.println("Ordren er nu betalt");
                         }
                         case 3 -> {
-                            orderManager.removeOrder(chosenOrder);
+                            chosenOrder.setCancelled();
                             System.out.println("Ordren blev slettet.");
                         }
                     }
