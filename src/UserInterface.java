@@ -227,29 +227,28 @@ public class UserInterface {
             case 2 -> {
                 System.out.println("""
                         1. Vis omsætning
-                        3. Vis mest solgte pizzaer
-                        4. Vis afsluttede ordre
-                        5. Vis annullerede ordre""");
+                        2. Vis mest solgte pizzaer
+                        3. Vis afsluttede ordre
+                        4. Vis annullerede ordre""");
 
                 int choice2 = scan.nextInt();
 
                 switch (choice2) {
 
                     case 1 -> {
-                        System.out.println("Antal pizzaer solgt:" + orderManager.getTotalPizzasSold());
-                        System.out.println("Dagens omsætning: " + orderManager.getTotalIncome());
+                        System.out.println("Antal pizzaer solgt: " + orderManager.getTotalPizzasSold());
+                        System.out.println("Dagens omsætning: " + orderManager.getTotalIncome() + " kr.");
+                        System.out.println();
                     }
+
                     case 2 -> {
 
                     }
                     case 3 -> {
-
-                    }
-                    case 4 -> {
                         orderManager.printCompletedOrders();
 
                     }
-                    case 5 -> {
+                    case 4 -> {
                         if (orderManager.cancelledOrders().isEmpty()){
                             System.out.println("Ingen annullerede ordrer i systemet på nuværende tidspunkt" + "\n");
                             break;
