@@ -193,4 +193,51 @@ public class UserInterface {
         }
 
     }
-}
+    private void admin(){
+        System.out.println("""
+                    1. Ændre menu
+                    2. Vis statistik""");
+
+        int choice = scan.nextInt();
+
+//        switch (choice) {
+//            //case 1, 2 -> {
+//                //switch (choice){
+//            case 1 -> {
+//                System.out.println(menu);
+//
+//                System.out.println("""
+//                                1. Ændre pris
+//                                2. Tilføj pizza""");
+
+        switch (choice) {
+            case 1 -> {
+                System.out.println("Hvilken pizza vil du ændre prisen på?");
+                int productNumber = scan.nextInt() - 1;
+                Product chosenProduct = menu.getProductByNumber(productNumber);
+                System.out.println("Hvad skal den nye pris være?");
+                int newPrice = scan.nextInt();
+                chosenProduct.setPrice(newPrice);
+                System.out.println("Pris er ændret");
+                System.out.println();
+            }
+            case 2 -> {
+                System.out.println("""
+                        1. Vis omsætning
+                        2. Vis mest solgte pizza
+                        3. Vis antal solgte pizza i alt
+                        4. Vis afsluttede ordre
+                        5. Vis Annullerede ordre""");
+
+                int choice = scan.nextInt();
+                        switch (choice) {
+
+            }
+
+                        }
+
+                }
+
+            }
+
+
