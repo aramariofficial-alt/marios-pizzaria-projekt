@@ -25,7 +25,7 @@ public class OrderManager {
     public ArrayList<Order> activeOrders() {
         ArrayList<Order> activeOrders = new ArrayList<>();
         for (Order order : orders) {
-            if (!order.isComplete()) {
+            if (!order.isComplete() && !order.isCancelled()) {
                 activeOrders.add(order);
             }
         }
@@ -35,12 +35,23 @@ public class OrderManager {
     public ArrayList<Order> completedOrders() {
         ArrayList<Order> completedOrders = new ArrayList<>();
         for (Order order : orders) {
-            if (order.isComplete()) {
+            if (order.isComplete() && !order.isCancelled()) {
                 completedOrders.add(order);
 
             }
         }
         return completedOrders;
+    }
+
+    public ArrayList<Order> cancelledOrders() {
+        ArrayList<Order> cancelledOrders = new ArrayList<>();
+        for (Order order : orders) {
+            if (order.isCancelled()) {
+                cancelledOrders.add(order);
+
+            }
+        }
+        return cancelledOrders;
     }
 
 

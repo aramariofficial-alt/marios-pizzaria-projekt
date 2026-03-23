@@ -12,6 +12,15 @@ public class Order {
 
     private boolean isReady;
     private boolean isPaid;
+    private boolean isCancelled;
+
+    public boolean isCancelled() {
+        return isCancelled;
+    }
+
+    public void setCancelled() {
+        isCancelled = true;
+    }
 
     public boolean isPaid() {
         return isPaid;
@@ -99,7 +108,7 @@ public class Order {
         return h;
     }
 
-    public String getActiveOrder(){
+    public String getActiveOrder() {
         String h = "";
         for (OrderLine line : list) {
             h += line.getQuantity() + " x " + line.getPizza() + "\n";
