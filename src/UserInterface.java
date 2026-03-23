@@ -136,7 +136,7 @@ public class UserInterface {
 
         int i = 0;
         for (Order order : orderManager.activeOrders()) {
-            System.out.println((i + 1) + "." + "\n" + order.getActiveOrder() + "\n" + "Bestilt: " +
+            System.out.println("Ordrenummer: " + (i + 1) + "." + "\n" + order.getActiveOrder() + "\n" + "Total: " + order.getTotal() + "kr,-" + "\n\n" + "Bestilt: " +
                     order.getTimeOfOrder().format(formatter) + "\n" + "Afhentes: " +
                     order.getEffectivePickUpTime().format(formatter) + "\n" + "Klar? " + order.isReady() + "\n" +
                     "Betalt? " + order.isPaid() + "\n\n");
@@ -193,10 +193,11 @@ public class UserInterface {
         }
 
     }
-    private void admin(){
+
+    private void admin() {
         System.out.println("""
-                    1. Ændre menu
-                    2. Vis statistik""");
+                1. Ændre menu
+                2. Vis statistik""");
 
         int choice = scan.nextInt();
 
@@ -229,15 +230,32 @@ public class UserInterface {
                         4. Vis afsluttede ordre
                         5. Vis Annullerede ordre""");
 
-                int choice = scan.nextInt();
-                        switch (choice) {
+                int choice2 = scan.nextInt();
 
-            }
+                switch (choice2) {
 
-                        }
+                    case 1 -> {
+                        System.out.println("hey");
+                    }
+                    case 2 -> {
+
+                    }
+                    case 3 -> {
+
+                    }
+                    case 4 -> {
+
+                    }
+                    case 5 -> {
+
+                    }
+                    default -> System.out.println("Fejl i input");
 
                 }
-
             }
+            default -> System.out.println("Fejl i input");
+        }
+    }
+}
 
 

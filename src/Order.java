@@ -6,9 +6,9 @@ public class Order {
     private final ArrayList<OrderLine> list = new ArrayList<>();
     private final LocalDateTime timeOfOrder = LocalDateTime.now();
     private LocalDateTime pickUpTime;
-
     private final DateTimeFormatter formatter =
             DateTimeFormatter.ofPattern("HH:mm dd-MM-yyyy");
+
 
     private boolean isReady;
     private boolean isPaid;
