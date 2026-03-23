@@ -2,8 +2,32 @@
 public class Main {
     public static void main(String[] args) {
 
+
+
         Menu menu = buildMenu();
         OrderManager orderManager = new OrderManager();
+        Order order1 = new Order();
+        Order order2 = new Order();
+        Order order3 = new Order();
+
+        order1.addOrderline(new OrderLine(3, menu.getProductByNumber(11)));
+        order1.addOrderline(new OrderLine(2, menu.getProductByNumber(1)));
+        order2.addOrderline(new OrderLine(3, menu.getProductByNumber(12)));
+        order2.addOrderline(new OrderLine(1, menu.getProductByNumber(3)));
+        order3.addOrderline(new OrderLine(6, menu.getProductByNumber(7)));
+
+        order1.setPaid();
+        order1.setReady();
+        order3.setPaid();
+
+        orderManager.addOrder(order1);
+        orderManager.addOrder(order2);
+        orderManager.addOrder(order3);
+
+
+
+
+
         UserInterface ui = new UserInterface(menu, orderManager);
         ui.start();
 
