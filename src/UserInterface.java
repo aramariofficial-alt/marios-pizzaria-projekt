@@ -1,3 +1,5 @@
+import jdk.swing.interop.SwingInterOpUtils;
+
 import java.util.ArrayList;
 import java.util.InputMismatchException;
 import java.util.Scanner;
@@ -234,8 +236,7 @@ public class UserInterface {
             case 2 -> {
                 System.out.println("""
                         1. Vis omsætning
-                        2. Vis mest solgte pizza
-                        3. Vis antal solgte pizza i alt
+                        3. Vis mest solgte pizzaer
                         4. Vis afsluttede ordre
                         5. Vis annullerede ordre""");
 
@@ -244,7 +245,8 @@ public class UserInterface {
                 switch (choice2) {
 
                     case 1 -> {
-                        System.out.println("hey");
+                        System.out.println("Antal pizzaer solgt:" + orderManager.getTotalPizzasSold());
+                        System.out.println("Dagens omsætning: " + orderManager.getTotalIncome());
                     }
                     case 2 -> {
 
