@@ -248,15 +248,23 @@ public class UserInterface {
 
                     }
                     case 5 -> {
-
+                        if (orderManager.cancelledOrders().isEmpty()){
+                            System.out.println("Ingen annullerede ordrer i systemet på nuværende tidspunkt" + "\n");
+                            break;
+                        }
+                        System.out.println("Anullerede ordrer" + "\n------------" + "\n" +
+                                orderManager.cancelledOrdersToString());
                     }
-                    default -> System.out.println("Fejl i input");
 
+                    default -> System.out.println("Fejl i input");
                 }
+
             }
+
             default -> System.out.println("Fejl i input");
         }
     }
 }
+
 
 
