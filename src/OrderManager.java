@@ -44,6 +44,11 @@ public class OrderManager {
         }
         return completedOrders;
     }
+    public void printCompletedOrders(){
+        for(Order order : completedOrders()){
+            System.out.println(order);
+        }
+    }
 
     public ArrayList<Order> cancelledOrders() {
         ArrayList<Order> cancelledOrders = new ArrayList<>();
@@ -99,14 +104,13 @@ public class OrderManager {
         return orders.get(number);
     }
 
-    public Order getActiveOrderByIndex(int index) {
-        ArrayList<Order> active = activeOrders();
-
-        if (index < 0 || index >= active.size()) {
-            return null;
+    public Order getActiveOrderByOrderNumber(int orderNumber) {
+        for(Order order : activeOrders()){
+            if(order.getOrderNumber() == orderNumber){
+            return order;
+            }
         }
-
-        return active.get(index);
+        return null;
     }
 
 

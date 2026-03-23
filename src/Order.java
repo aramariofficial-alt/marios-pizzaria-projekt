@@ -13,6 +13,7 @@ public class Order {
     private boolean isReady;
     private boolean isPaid;
     private boolean isCancelled;
+    private int orderNumber;
 
     public boolean isCancelled() {
         return isCancelled;
@@ -29,8 +30,6 @@ public class Order {
     public boolean isReady() {
         return isReady;
     }
-
-    private int orderNumber;
 
     public void addOrderline(OrderLine orderLine) {
         list.add(orderLine);
@@ -125,12 +124,13 @@ public class Order {
         }
 
         return String.format("""
+                        Ordrenummer: %s
                         %s
                         -----
                         TOTAL: %.2f kr.
                         Bestilt: %s
                         Afhentes: %s
-                        -------------""",
+                        -------------""", getOrderNumber(),
                 sb.toString(),
                 getTotal(),
                 timeOfOrder.format(formatter),

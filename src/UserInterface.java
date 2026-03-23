@@ -144,7 +144,7 @@ public class UserInterface {
 
         int i = 0;
         for (Order order : orderManager.activeOrders()) {
-            System.out.println("Ordrenummer: " + (i + 1) + "." + "\n" + order.getActiveOrder() + "\n" + "Total: " + order.getTotal() + "kr,-" + "\n\n" + "Bestilt: " +
+            System.out.println("Ordrenummer: " + (order.getOrderNumber()) + "\n" + order.getActiveOrder() + "\n" + "Total: " + order.getTotal() + "kr,-" + "\n\n" + "Bestilt: " +
                     order.getTimeOfOrder().format(formatter) + "\n" + "Afhentes: " +
                     order.getEffectivePickUpTime().format(formatter) + "\n" + "Klar? " + order.isReady() + "\n" +
                     "Betalt? " + order.isPaid() + "\n\n");
@@ -158,8 +158,13 @@ public class UserInterface {
         if (statusUpdate.equalsIgnoreCase("nej")) {
             return;
         } else if (statusUpdate.equalsIgnoreCase("ja")) {
+            System.out.println("Indtast ordre nummer");
+            int orderNumber = scan.nextInt();
+            Order chosenOrder = orderManager.getActiveOrderByOrderNumber(orderNumber);
+
 
             System.out.println("""
+                    Hvilken handling vil du udfører?
                     1. Ordre klar
                     2. Ordre betalt
                     3. Annuller ordre""");
@@ -168,18 +173,6 @@ public class UserInterface {
 
             switch (choice) {
 
-                case 1, 2, 3 -> {
-                    System.out.println("Vælg ordre");
-                    int answer = scan.nextInt();
-
-                    Order chosenOrder = orderManager.getActiveOrderByIndex(answer - 1);
-
-//                    if (chosenOrder == null) {
-//                        System.out.println("Ugyldigt valg");
-//                        return;
-//                    }
-
-                    switch (choice) {
                         case 1 -> {
                             chosenOrder.setReady();
                             System.out.println("Ordren er nu klar");
@@ -192,8 +185,6 @@ public class UserInterface {
                             chosenOrder.setCancelled();
                             System.out.println("Ordren blev annulleret.");
                         }
-                    }
-                }
 
                 default -> System.out.println("Input fejl");
             }
@@ -237,7 +228,7 @@ public class UserInterface {
                         2. Vis mest solgte pizza
                         3. Vis antal solgte pizza i alt
                         4. Vis afsluttede ordre
-                        5. Vis Annullerede ordre""");
+                        5. Vis annullerede ordre""");
 
                 int choice2 = scan.nextInt();
 
@@ -253,6 +244,7 @@ public class UserInterface {
 
                     }
                     case 4 -> {
+                        orderManager.printCompletedOrders();
 
                     }
                     case 5 -> {

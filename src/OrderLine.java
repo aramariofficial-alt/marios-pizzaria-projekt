@@ -22,6 +22,9 @@ public class OrderLine {
     public String getPizza() {
         return product.getPizza();
     }
+    public Product getProduct(){
+        return this.product;
+    }
 
     public String toString() {
         return String.format("""
