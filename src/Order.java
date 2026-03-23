@@ -12,6 +12,16 @@ public class Order {
 
     private boolean isReady;
     private boolean isPaid;
+    private boolean isCancelled;
+
+
+    public void setCancelled(){
+        isCancelled = true;
+    }
+
+    public boolean isCancelled() {
+        return isCancelled;
+    }
 
     public boolean isPaid() {
         return isPaid;
