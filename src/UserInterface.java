@@ -163,8 +163,12 @@ public class UserInterface {
             System.out.println("Indtast ordre nummer");
             int orderNumber = scan.nextInt();
             Order chosenOrder = orderManager.getActiveOrderByOrderNumber(orderNumber);
-            System.out.println((chosenOrder) + "\n" + "Klar? " + chosenOrder.isReady() + "\n" +
-                    "Betalt? " + chosenOrder.isPaid() + "\n\n");
+            System.out.printf("""
+                    %s
+                    Klar: %s
+                    Betalt: %s
+                    
+                    """, chosenOrder, chosenOrder.statusReady(), chosenOrder.statusPaid());
 
 
             System.out.println("""
@@ -203,16 +207,6 @@ public class UserInterface {
                 2. Vis statistik""");
 
         int choice = scan.nextInt();
-
-//        switch (choice) {
-//            //case 1, 2 -> {
-//                //switch (choice){
-//            case 1 -> {
-//                System.out.println(menu);
-//
-//                System.out.println("""
-//                                1. Ændre pris
-//                                2. Tilføj pizza""");
 
         switch (choice) {
             case 1 -> {

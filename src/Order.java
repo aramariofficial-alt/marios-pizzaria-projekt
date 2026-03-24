@@ -34,12 +34,12 @@ public class Order {
     public boolean isReady() {
         return isReady;
     }
-    public String printPaid(){
+    public String statusPaid(){
         if(isPaid){
             return "Ja";
         }else return "Nej";
     }
-    public String printReady(){
+    public String statusReady(){
         if(isReady){
             return "Ja";
         }else return "Nej";
