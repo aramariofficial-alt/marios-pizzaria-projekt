@@ -13,6 +13,7 @@ public class Order {
     private boolean isReady;
     private boolean isPaid;
     private boolean isCancelled;
+    private boolean isPickedUp;
     private int orderNumber;
 
     public LocalDateTime getPickUpTime(){
@@ -41,6 +42,17 @@ public class Order {
     }
     public String statusReady(){
         if(isReady){
+            return "Ja";
+        }else return "Nej";
+    }
+    public boolean isPickedUp(){
+        return isPickedUp;
+    }
+    public void setPickedUp(){
+        isPickedUp = true;
+    }
+    public String statusPickedUp(){
+        if(isPickedUp){
             return "Ja";
         }else return "Nej";
     }
@@ -97,7 +109,7 @@ public class Order {
     }
 
     public boolean isComplete() {
-        return isPaid && isReady;
+        return isPaid && isReady && isPickedUp;
     }
 
     public String getPizza() {

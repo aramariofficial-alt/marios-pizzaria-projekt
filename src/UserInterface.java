@@ -142,15 +142,33 @@ public class UserInterface {
             return;
         }
 
-        System.out.println("ACTIVE ORDERS:\n------------");
+        System.out.println("ACTIVE ORDERS:\n--------------------");
 
-        int i = 0;
+
         for (Order order : orderManager.activeOrders()) {
-            System.out.println("Ordrenummer: " + (order.getOrderNumber()) + "\n" + order.getActiveOrder() + "\n" + "Total: " + order.getTotal() + "kr,-" + "\n\n" + "Bestilt: " +
-                    order.getTimeOfOrder().format(formatter) + "\n" + "Afhentes: " +
-                    order.getEffectivePickUpTime().format(formatter) + "\n" + "Klar? " + order.isReady() + "\n" +
-                    "Betalt? " + order.isPaid() + "\n\n");
-            i++;
+//            System.out.println("Ordrenummer: " + (order.getOrderNumber()) + "\n" + order.getActiveOrder() + "\n" +
+//                    "Total: " + order.getTotal() + "kr,-" + "\n\n" + "Bestilt: " +
+//                    order.getTimeOfOrder().format(formatter) + "\n" + "Afhentes: " +
+//                    order.getEffectivePickUpTime().format(formatter) + "\n" + "Klar? " + order.isReady() + "\n" +
+//                    "Betalt? " + order.isPaid() + "\n" + "Afhentet? " + order.isPickedUp() +  "\n\n");
+
+            System.out.printf("""
+                    --------------------
+                    Ordrenummer: %s
+                    %s
+                    Total: %s kr.
+                    
+                    Bestil: %s
+                    Afhentes: %s
+                    Klar: %s
+                    Betalt: %s
+                    Afhentet: %s
+                    --------------------
+                    """, order.getOrderNumber(), order.getActiveOrder(), order.getTotal(),
+                    order.getTimeOfOrder().format(formatter),
+                    order.getEffectivePickUpTime().format(formatter),
+                    order.statusReady(), order.statusPaid(), order.statusPickedUp());
+
         }
 
 
@@ -167,15 +185,18 @@ public class UserInterface {
                     %s
                     Klar: %s
                     Betalt: %s
+                    Afhentet: %s
                     
-                    """, chosenOrder, chosenOrder.statusReady(), chosenOrder.statusPaid());
+                    """, chosenOrder, chosenOrder.statusReady(), chosenOrder.statusPaid(), chosenOrder.statusPickedUp());
 
 
             System.out.println("""
-                    Hvilken handling vil du udfører?
-                    1. Ordre klar
-                    2. Ordre betalt
-                    3. Annuller ordre""");
+                    Hvilken handling vil du udføre?
+                    1. Klar
+                    2. Betalt
+                    3. Afhentet
+                    4. Annuller ordre
+                    """);
 
             int choice = scan.nextInt();
 
@@ -190,8 +211,14 @@ public class UserInterface {
                             System.out.println("Ordren er nu betalt");
                         }
                         case 3 -> {
+                            chosenOrder.setPickedUp();
+                            System.out.println("Ordren blev afhentet");
+
+                        }
+                        case 4 -> {
                             chosenOrder.setCancelled();
                             System.out.println("Ordren blev annulleret.");
+
                         }
 
                 default -> System.out.println("Input fejl");
@@ -236,16 +263,10 @@ public class UserInterface {
                         System.out.println("Dagens omsætning: " + orderManager.getTotalIncome() + " kr.");
                         System.out.println();
                     }
+                    case 2 -> orderManager.pizzaRanking(menu.getMenu());
 
-                    case 2 -> {
-                        orderManager.pizzaRanking(menu.getMenu());
+                    case 3 -> orderManager.printCompletedOrders();
 
-
-                    }
-                    case 3 -> {
-                        orderManager.printCompletedOrders();
-
-                    }
                     case 4 -> {
                         if (orderManager.cancelledOrders().isEmpty()){
                             System.out.println("Ingen annullerede ordrer i systemet på nuværende tidspunkt" + "\n");
