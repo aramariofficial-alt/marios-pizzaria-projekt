@@ -163,6 +163,11 @@ public class UserInterface {
             System.out.println("Indtast ordre nummer");
             int orderNumber = scan.nextInt();
             Order chosenOrder = orderManager.getActiveOrderByOrderNumber(orderNumber);
+            System.out.println("""
+                    %s
+                    Klar: %s
+                    Betalt: %s
+                    """, chosenOrder,
 
 
             System.out.println("""
@@ -242,7 +247,8 @@ public class UserInterface {
                     }
 
                     case 2 -> {
-                        orderManager.pizzaRanking();
+                        orderManager.pizzaRanking(menu.getMenu());
+
 
                     }
                     case 3 -> {

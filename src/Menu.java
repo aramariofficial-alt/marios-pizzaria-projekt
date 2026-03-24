@@ -15,6 +15,10 @@ public class Menu {
         return menu.get(number);
     }
 
+    public ArrayList<Product> getMenu(){
+        return menu;
+    }
+
     public int getProductCount() {
         return menu.size();
     }

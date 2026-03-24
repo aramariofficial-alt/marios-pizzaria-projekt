@@ -15,6 +15,10 @@ public class Order {
     private boolean isCancelled;
     private int orderNumber;
 
+    public LocalDateTime getPickUpTime(){
+        return pickUpTime;
+    }
+
     public boolean isCancelled() {
         return isCancelled;
     }
@@ -29,6 +33,16 @@ public class Order {
 
     public boolean isReady() {
         return isReady;
+    }
+    public String printPaid(){
+        if(isPaid){
+            return "Ja";
+        }else return "Nej";
+    }
+    public String printReady(){
+        if(isReady){
+            return "Ja";
+        }else return "Nej";
     }
 
     public void addOrderline(OrderLine orderLine) {
@@ -102,12 +116,8 @@ public class Order {
         return quantity;
     }
 
-    public String getOrderLinesInOrder() {
-        String h = "";
-        for (OrderLine line : list) {
-            h += line.getQuantity() + " x " + line.getPizza() + "\n";
-        }
-        return h;
+    public ArrayList<OrderLine> getOrderLinesInOrder() {
+        return list;
     }
 
     public String getActiveOrder() {

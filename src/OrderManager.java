@@ -2,6 +2,7 @@ import java.lang.reflect.Array;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Comparator;
 
 public class OrderManager {
 
@@ -35,6 +36,7 @@ public class OrderManager {
                 activeOrders.add(order);
             }
         }
+        activeOrders.sort(Comparator.comparing(Order :: getEffectivePickUpTime));
         return activeOrders;
     }
 
@@ -47,6 +49,29 @@ public class OrderManager {
             }
         }
         return completedOrders;
+    }
+    public void pizzaRanking(ArrayList<Product> menu){
+        ArrayList<OrderLine> mostSellingProduct = new ArrayList<>();
+
+        for(Product product : menu){
+            OrderLine orderline = new OrderLine(0, product);
+            mostSellingProduct.add(orderline);
+        }
+        for(Order order : completedOrders()){
+            for(OrderLine orderline : order.getOrderLines()){
+                for(OrderLine pizza : mostSellingProduct){
+                    if(orderline.getPizza().equals(pizza.getPizza())) {
+                        pizza.setQuantity(orderline.getQuantity() + pizza.getQuantity());
+                        break;
+                    }
+                }
+            }
+        }
+        mostSellingProduct.sort(Comparator.comparing(OrderLine :: getQuantity).reversed());
+        for(OrderLine orderline : mostSellingProduct){
+            System.out.println(orderline);
+            System.out.println();
+        }
     }
     public void printCompletedOrders(){
         for(Order order : completedOrders()){
