@@ -163,11 +163,8 @@ public class UserInterface {
             System.out.println("Indtast ordre nummer");
             int orderNumber = scan.nextInt();
             Order chosenOrder = orderManager.getActiveOrderByOrderNumber(orderNumber);
-            System.out.println("""
-                    %s
-                    Klar: %s
-                    Betalt: %s
-                    """, chosenOrder,
+            System.out.println((chosenOrder) + "\n" + "Klar? " + chosenOrder.isReady() + "\n" +
+                    "Betalt? " + chosenOrder.isPaid() + "\n\n");
 
 
             System.out.println("""
