@@ -242,6 +242,7 @@ public class UserInterface {
                     }
 
                     case 2 -> {
+                        orderManager.pizzaRanking();
 
                     }
                     case 3 -> {

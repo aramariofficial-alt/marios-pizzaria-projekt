@@ -9,20 +9,31 @@ public class Main {
         Order order1 = new Order();
         Order order2 = new Order();
         Order order3 = new Order();
+        Order order4 = new Order();
+        Order order5 = new Order();
 
-        order1.addOrderline(new OrderLine(3, menu.getProductByNumber(11)));
+        order1.addOrderline(new OrderLine(13, menu.getProductByNumber(11)));
         order1.addOrderline(new OrderLine(2, menu.getProductByNumber(1)));
-        order2.addOrderline(new OrderLine(3, menu.getProductByNumber(12)));
+        order2.addOrderline(new OrderLine(4, menu.getProductByNumber(12)));
         order2.addOrderline(new OrderLine(1, menu.getProductByNumber(3)));
         order3.addOrderline(new OrderLine(6, menu.getProductByNumber(7)));
+        order4.addOrderline(new OrderLine(2, menu.getProductByNumber(8)));
+        order5.addOrderline(new OrderLine(6, menu.getProductByNumber(3)));
 
         order1.setPaid();
         order1.setReady();
+        order2.setPaid();
+        order2.setReady();
         order3.setPaid();
+        order3.setReady();
+        order4.setPaid();
+        order5.setReady();
 
         orderManager.addOrder(order1);
         orderManager.addOrder(order2);
         orderManager.addOrder(order3);
+        orderManager.addOrder(order4);
+        orderManager.addOrder(order5);
 
 
 

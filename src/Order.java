@@ -34,6 +34,9 @@ public class Order {
     public void addOrderline(OrderLine orderLine) {
         list.add(orderLine);
     }
+    public ArrayList<OrderLine> getOrderLines(){
+        return list;
+    }
 
     public LocalDateTime addPickUpTime(int hour, int minute) {
         this.pickUpTime = timeOfOrder.withHour(hour).withMinute(minute);

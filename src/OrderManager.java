@@ -1,6 +1,7 @@
 import java.lang.reflect.Array;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Collection;
 
 public class OrderManager {
 
@@ -21,8 +22,6 @@ public class OrderManager {
             if (current.getOrderNumber() == orderNumber) {
                 current.setPaid();
                 break;
-            } else {
-                //
             }
         }
 
