@@ -72,10 +72,16 @@ public class UserInterface {
         System.out.println(menu);
         boolean orderDone = false;
 
+        try{
         while (!orderDone) {
 
             System.out.println("Indtast nummer på pizza: ");
             int productNumber = scan.nextInt() - 1;
+           while(productNumber > menu.getProductCount()){
+                System.out.println("Ugyldigt nummer, prøve igen");
+                productNumber = scan.nextInt();
+            }
+
 
             Product chosenProduct = menu.getProductByNumber(productNumber);
 
@@ -128,6 +134,10 @@ public class UserInterface {
                 System.out.println("Fejl i input");
             }
         }
+        }catch (InputMismatchException e){
+        System.out.println("Ugyldigt nummer, prøv igen: ");
+        scan.next();
+    }
 
         orderManager.addOrder(order);
 
