@@ -20,10 +20,13 @@ public class OrderManager {
 
     public void payOrder(int orderNumber) {
         for (Order current : orders) {
-            if (current.getOrderNumber() == orderNumber) {
-                current.setPaid();
-                break;
+            if(!current.isPaid()){
+                if (current.getOrderNumber() == orderNumber) {
+                    current.setPaid();
+                    break;
+                }
             }
+
         }
 
     }

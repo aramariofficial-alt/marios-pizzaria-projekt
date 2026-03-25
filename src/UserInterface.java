@@ -24,11 +24,11 @@ public class UserInterface {
         while (!quit) {
 
             System.out.println("""
-                    1. Opret Bestilling
-                    2. Betal
-                    3. Aktive Ordrer
-                    4. Admin
-                    5. Afslut
+                    1. OPRET BESTILLING
+                    2. BETAL
+                    3. AKTIVE ORDRER
+                    4. ADMIN
+                    5. AFSLUT
                     """);
 
             try{
@@ -50,20 +50,44 @@ public class UserInterface {
 
     private void payOrder() {
         ArrayList<Order> activeOrders = this.orderManager.activeOrders();
-        System.out.println("Hvilken ordre bliver betalt");
-        System.out.println("0 for at annullere");
-        System.out.println();
-        activeOrders.forEach(order -> {
-            System.out.println(order.getOrderNumberString());
-        });
-        int choice = scan.nextInt();
-        if (choice == 0) {
-            return; //annullere betaling
-        }
-        double totalPrice = orderManager.getOrderTotal(choice);
-        System.out.println("Total: " + totalPrice);
-        orderManager.payOrder(choice);
 
+        int count = 1;
+        int count2 = 0;
+
+        for(Order order : activeOrders){
+            if(!order.isPaid()){
+                count2++;
+                if(count2 == 2){
+                    System.out.println("Hvilket ordrenummer skal betales?\n(Indtast 0 for at gå tilbage)\n");
+                }
+                System.out.println(order);
+
+                count--;
+
+            }
+            else if(count == activeOrders.size()){
+                System.out.println("--::$$ Alle ordre er betalt $$::--\n");
+                return;
+            }
+            count++;
+        }
+
+        while(true){
+            int choice = scan.nextInt();
+            if (choice == 0) {
+                return; //annullere betaling
+            }
+            for(Order order : activeOrders) {
+                if(order.getOrderNumber() == choice && !order.isPaid()){
+
+                    double totalPrice = orderManager.getOrderTotal(choice);
+                    orderManager.payOrder(choice);
+                    System.out.println("Ordren er betalt!\nBeløb: " + totalPrice + " kr.\n");
+                    return;
+                }
+            }
+            System.out.println("Forkert indtastning, prøv igen!\n (Indtast 0 for at gå tilbage)");
+        }
     }
 
     private void newOrder() {
@@ -202,10 +226,10 @@ public class UserInterface {
 
             System.out.println("""
                     Hvilken handling vil du udføre?
-                    1. Klar
-                    2. Betalt
-                    3. Afhentet
-                    4. Annuller ordre
+                    1. KLAR
+                    2. BETALT
+                    3. AFHENTET
+                    4. ANNULLER ORDRE
                     """);
 
             int choice = scan.nextInt();
@@ -240,8 +264,9 @@ public class UserInterface {
 
     private void admin() {
         System.out.println("""
-                1. Ændre menu
-                2. Vis statistik""");
+                1. ÆNDRE PRIS I MENU
+                2. STATISTIK
+                """);
 
         int choice = scan.nextInt();
 
@@ -259,10 +284,11 @@ public class UserInterface {
             }
             case 2 -> {
                 System.out.println("""
-                        1. Vis omsætning
-                        2. Vis mest solgte pizzaer
-                        3. Vis afsluttede ordre
-                        4. Vis annullerede ordre""");
+                        1. OMSÆTNING
+                        2. MEST SOLGTE PRODUKTER
+                        3. AFSLUTTEDE ORDRER
+                        4. ANNULLEREDE ORDRER
+                        """);
 
                 int choice2 = scan.nextInt();
 
@@ -270,7 +296,7 @@ public class UserInterface {
 
                     case 1 -> {
                         System.out.println("Antal pizzaer solgt: " + orderManager.getTotalPizzasSold());
-                        System.out.println("Dagens omsætning: " + orderManager.getTotalIncome() + " kr.");
+                        System.out.println("Omsætning: " + orderManager.getTotalIncome() + " kr.");
                         System.out.println();
                     }
                     case 2 -> orderManager.pizzaRanking(menu.getMenu());
