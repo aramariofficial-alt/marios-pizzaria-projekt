@@ -17,12 +17,23 @@ public class Order {
     private boolean isPaid;
     private boolean isCancelled;
     private boolean isPickedUp;
+    private boolean discount;
+
+    public boolean isDiscount() {
+        return discount;
+    }
+
+    public void setDiscount() {
+        discount = true;
+    }
+
     private int orderNumber;
 
     public ArrayList<OrderLine> getList() {
         return list;
     }
-    public LocalDateTime getPickUpTime(){
+
+    public LocalDateTime getPickUpTime() {
         return pickUpTime;
     }
 
@@ -41,32 +52,38 @@ public class Order {
     public boolean isReady() {
         return isReady;
     }
-    public String statusPaid(){
-        if(isPaid){
+
+    public String statusPaid() {
+        if (isPaid) {
             return "Ja";
-        }else return "Nej";
+        } else return "Nej";
     }
-    public String statusReady(){
-        if(isReady){
+
+    public String statusReady() {
+        if (isReady) {
             return "Ja";
-        }else return "Nej";
+        } else return "Nej";
     }
-    public boolean isPickedUp(){
+
+    public boolean isPickedUp() {
         return isPickedUp;
     }
-    public void setPickedUp(){
+
+    public void setPickedUp() {
         isPickedUp = true;
     }
-    public String statusPickedUp(){
-        if(isPickedUp){
+
+    public String statusPickedUp() {
+        if (isPickedUp) {
             return "Ja";
-        }else return "Nej";
+        } else return "Nej";
     }
 
     public void addOrderline(OrderLine orderLine) {
         list.add(orderLine);
     }
-    public ArrayList<OrderLine> getOrderLines(){
+
+    public ArrayList<OrderLine> getOrderLines() {
         return list;
     }
 
@@ -100,10 +117,17 @@ public class Order {
 
     public double getTotal() {
         double total = 0;
-        for (OrderLine line : list) {
-            total += line.getTotal();
+        if (!discount) {
+            for (OrderLine line : list) {
+                total += line.getTotal();
+            }
+            return total;
+        } else {
+            for (OrderLine line : list) {
+                total += line.getTotal();
+            }
+            return total * 0.90;
         }
-        return total;
     }
 
     public void setReady() {
