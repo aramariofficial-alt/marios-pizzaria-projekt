@@ -6,16 +6,17 @@ import java.util.Scanner;
 import java.time.format.DateTimeFormatter;
 
 public class UserInterface {
-    // public static void main(String[] args) {
+
     private final Scanner scan = new Scanner(System.in);
     private final Menu menu;
     private final OrderManager orderManager;
-    private final DateTimeFormatter formatter =
-            DateTimeFormatter.ofPattern("HH:mm");
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("HH:mm");
+    private final Customers customers;
 
-    public UserInterface(Menu menu, OrderManager orderManager) {
+    public UserInterface(Menu menu, OrderManager orderManager, Customers customers) {
         this.menu = menu;
         this.orderManager = orderManager;
+        this.customers = customers;
 
     }
 
@@ -25,27 +26,41 @@ public class UserInterface {
 
             System.out.println("""
                     1. OPRET BESTILLING
-                    2. BETAL
-                    3. AKTIVE ORDRER
-                    4. ADMIN
-                    5. AFSLUT
+                    2. OPRET BRUGER
+                    3. BETAL
+                    4. AKTIVE ORDRER
+                    5. ADMIN
+                    6. AFSLUT
                     """);
 
-            try{
-            int choice = scan.nextInt();
-            switch (choice) {
-                case 1 -> newOrder();
-                case 2 -> payOrder();
-                case 3 -> printActiveOrders();
-                case 4 -> admin();
-                case 5 -> quit = true;
-                default -> System.out.println("Ugyldigt nummer, prøv igen: ");
-            }
-            }catch (InputMismatchException e){
+            try {
+                int choice = scan.nextInt();
+                switch (choice) {
+                    case 1 -> newOrder();
+                    case 2 -> newCustomer();
+                    case 3 -> payOrder();
+                    case 4 -> printActiveOrders();
+                    case 5 -> admin();
+                    case 6 -> quit = true;
+                    default -> System.out.println("Ugyldigt nummer, prøv igen: ");
+                }
+            } catch (InputMismatchException e) {
                 System.out.println("Ugyldigt nummer, prøv igen: ");
                 scan.next();
             }
         }
+    }
+
+    private void newCustomer(){
+        System.out.println("Indtast telefonnummer: ");
+        int phoneNumber = scan.nextInt();
+        System.out.println("Indtast password: ");
+        int password = scan.nextInt();
+        CustomerProfile newCustomer = new CustomerProfile(phoneNumber, password);
+        customers.addCustomer(newCustomer);
+
+        System.out.println("Brugeren blev oprettet!\n");
+
     }
 
     private void payOrder() {
@@ -54,31 +69,30 @@ public class UserInterface {
         int count = 1;
         int count2 = 0;
 
-        for(Order order : activeOrders){
-            if(!order.isPaid()){
+        for (Order order : activeOrders) {
+            if (!order.isPaid()) {
                 count2++;
-                if(count2 == 2){
+                if (count2 == 1) {
                     System.out.println("Hvilket ordrenummer skal betales?\n(Indtast 0 for at gå tilbage)\n");
                 }
                 System.out.println(order);
 
                 count--;
 
-            }
-            else if(count == activeOrders.size()){
+            } else if (count == activeOrders.size()) {
                 System.out.println("--::$$ Alle ordre er betalt $$::--\n");
                 return;
             }
             count++;
         }
 
-        while(true){
+        while (true) {
             int choice = scan.nextInt();
             if (choice == 0) {
                 return; //annullere betaling
             }
-            for(Order order : activeOrders) {
-                if(order.getOrderNumber() == choice && !order.isPaid()){
+            for (Order order : activeOrders) {
+                if (order.getOrderNumber() == choice && !order.isPaid()) {
 
                     double totalPrice = orderManager.getOrderTotal(choice);
                     orderManager.payOrder(choice);
@@ -96,72 +110,97 @@ public class UserInterface {
         System.out.println(menu);
         boolean orderDone = false;
 
-        try{
-        while (!orderDone) {
+        try {
+            while (!orderDone) {
 
-            System.out.println("Indtast nummer på pizza: ");
-            int productNumber = scan.nextInt() - 1;
-           while(productNumber > menu.getProductCount()){
-                System.out.println("Ugyldigt nummer, prøve igen");
-                productNumber = scan.nextInt();
-            }
-
-
-            Product chosenProduct = menu.getProductByNumber(productNumber);
-
-            System.out.println("Indtast antal: ");
-            int quantity = scan.nextInt();
-
-            order.addOrderline(new OrderLine(quantity, chosenProduct));
-
-            int choice;
-            while (true) { //sikrer korrekt input
-                System.out.println("Tryk 0 for at afslutte bestillingen");
-                System.out.println("Tryk 1 for at tilføje flere pizzaer");
-                choice = scan.nextInt();
-
-                if (choice == 0 || choice == 1) {
-                    break;
-                }
-                System.out.println("Fejl i input. Prøv igen");
-
-
-            }
-
-
-            if (choice == 1) {
-                System.out.println(menu);
-                continue;
-            }
-
-            if (choice == 0) {
-
-                System.out.println("Tilføj afhentningstid? (ja/nej)");
-                if (scan.next().equalsIgnoreCase("ja")) {
-                    System.out.println("Time: ");
-                    int time = scan.nextInt();
-
-                    System.out.println("Minut: ");
-                    int minut = scan.nextInt();
-
-                    order.addPickUpTime(time, minut);
+                System.out.println("Indtast nummer på pizza: ");
+                int productNumber = scan.nextInt() - 1;
+                while (productNumber > menu.getProductCount()) {
+                    System.out.println("Ugyldigt nummer, prøve igen");
+                    productNumber = scan.nextInt();
                 }
 
-                System.out.println("Betal nu? (ja/nej)");
-                if (scan.next().equalsIgnoreCase("ja")) {
-                    order.setPaid();
-                    System.out.println("Betaling godkendt\n");
+
+                Product chosenProduct = menu.getProductByNumber(productNumber);
+
+                System.out.println("Indtast antal: ");
+                int quantity = scan.nextInt();
+
+                order.addOrderline(new OrderLine(quantity, chosenProduct));
+
+                int choice;
+                while (true) { //sikrer korrekt input
+                    System.out.println("Tryk 0 for at afslutte bestillingen");
+                    System.out.println("Tryk 1 for at tilføje flere pizzaer");
+                    choice = scan.nextInt();
+
+                    if (choice == 0 || choice == 1) {
+                        break;
+                    }
+                    System.out.println("Fejl i input. Prøv igen");
+
+
                 }
 
-                orderDone = true;
-            } else {
-                System.out.println("Fejl i input");
+
+                if (choice == 1) {
+                    System.out.println(menu);
+                    continue;
+                }
+
+                if (choice == 0) {
+
+                    System.out.println("Tilføj afhentningstid? (ja/nej)");
+                    if (scan.next().equalsIgnoreCase("ja")) {
+                        System.out.println("Time: ");
+                        int time = scan.nextInt();
+
+                        System.out.println("Minut: ");
+                        int minut = scan.nextInt();
+
+                        order.addPickUpTime(time, minut);
+                    }
+
+                    System.out.println("""
+                            BETALING:
+                            1. NU
+                            2. SENERE
+                            3. MED BRUGER
+                            """);
+
+                    switch(scan.nextInt()){
+                        case 1 -> {
+                            order.setPaid();
+                            System.out.println("Betaling godkendt\n");
+                        }
+                        case 2 -> {}
+
+                        case 3 -> {
+                            System.out.println("Indtast telefonnummer: ");
+                            int phoneNumber = scan.nextInt();
+                            System.out.println("Indtast password: ");
+                            int password = scan.nextInt();
+                        }
+
+                            default ->  System.out.println("Fejl i input");
+                    }
+//
+//                    System.out.println("Betal nu? (ja/nej)");
+//                    if (scan.next().equalsIgnoreCase("ja")) {
+//                        order.setPaid();
+//                        System.out.println("Betaling godkendt\n");
+//                    }
+
+                    orderDone = true;
+                }
+//                else {
+//                    System.out.println("Fejl i input");
+//                }
             }
+        } catch (InputMismatchException e) {
+            System.out.println("Ugyldigt nummer, prøv igen: ");
+            scan.next();
         }
-        }catch (InputMismatchException e){
-        System.out.println("Ugyldigt nummer, prøv igen: ");
-        scan.next();
-    }
 
         orderManager.addOrder(order);
 
@@ -180,25 +219,19 @@ public class UserInterface {
 
 
         for (Order order : orderManager.activeOrders()) {
-//            System.out.println("Ordrenummer: " + (order.getOrderNumber()) + "\n" + order.getActiveOrder() + "\n" +
-//                    "Total: " + order.getTotal() + "kr,-" + "\n\n" + "Bestilt: " +
-//                    order.getTimeOfOrder().format(formatter) + "\n" + "Afhentes: " +
-//                    order.getEffectivePickUpTime().format(formatter) + "\n" + "Klar? " + order.isReady() + "\n" +
-//                    "Betalt? " + order.isPaid() + "\n" + "Afhentet? " + order.isPickedUp() +  "\n\n");
-
             System.out.printf("""
-                    --------------------
-                    Ordrenummer: %s
-                    %s
-                    Total: %s kr.
-                    
-                    Bestil: %s
-                    Afhentes: %s
-                    Klar: %s
-                    Betalt: %s
-                    Afhentet: %s
-                    --------------------
-                    """, order.getOrderNumber(), order.getActiveOrder(), order.getTotal(),
+                            --------------------
+                            Ordrenummer: %s
+                            %s
+                            Total: %s kr.
+                            
+                            Bestil: %s
+                            Afhentes: %s
+                            Klar: %s
+                            Betalt: %s
+                            Afhentet: %s
+                            --------------------
+                            """, order.getOrderNumber(), order.getActiveOrder(), order.getTotal(),
                     order.getTimeOfOrder().format(formatter),
                     order.getEffectivePickUpTime().format(formatter),
                     order.statusReady(), order.statusPaid(), order.statusPickedUp());
@@ -216,12 +249,13 @@ public class UserInterface {
             int orderNumber = scan.nextInt();
             Order chosenOrder = orderManager.getActiveOrderByOrderNumber(orderNumber);
             System.out.printf("""
-                    %s
-                    Klar: %s
-                    Betalt: %s
-                    Afhentet: %s
-                    
-                    """, chosenOrder, chosenOrder.statusReady(), chosenOrder.statusPaid(), chosenOrder.statusPickedUp());
+                            %s
+                            Klar: %s
+                            Betalt: %s
+                            Afhentet: %s
+                            
+                            """, chosenOrder, chosenOrder.statusReady(), chosenOrder.statusPaid(),
+                    chosenOrder.statusPickedUp());
 
 
             System.out.println("""
@@ -236,90 +270,103 @@ public class UserInterface {
 
             switch (choice) {
 
-                        case 1 -> {
-                            chosenOrder.setReady();
-                            System.out.println("Ordren er nu klar");
-                        }
-                        case 2 -> {
-                            chosenOrder.setPaid();
-                            System.out.println("Ordren er nu betalt");
-                        }
-                        case 3 -> {
-                            chosenOrder.setPickedUp();
-                            System.out.println("Ordren blev afhentet");
-
-                        }
-                        case 4 -> {
-                            chosenOrder.setCancelled();
-                            System.out.println("Ordren blev annulleret.");
-
-                        }
-
-                default -> System.out.println("Input fejl");
-            }
-
-        }
-
-    }
-
-    private void admin() {
-        System.out.println("""
-                1. ÆNDRE PRIS I MENU
-                2. STATISTIK
-                """);
-
-        int choice = scan.nextInt();
-
-        switch (choice) {
-            case 1 -> {
-                System.out.println(menu);
-                System.out.println("Hvilken pizza nr. vil du ændre prisen på?");
-                int productNumber = scan.nextInt() - 1;
-                Product chosenProduct = menu.getProductByNumber(productNumber);
-                System.out.println("Hvad skal den nye pris på " + chosenProduct.getPizza() + " være?");
-                int newPrice = scan.nextInt();
-                chosenProduct.setPrice(newPrice);
-                System.out.println("Prisen på " + chosenProduct.getPizza() + " er ændret til " + newPrice + " kr.");
-                System.out.println();
-            }
-            case 2 -> {
-                System.out.println("""
-                        1. OMSÆTNING
-                        2. MEST SOLGTE PRODUKTER
-                        3. AFSLUTTEDE ORDRER
-                        4. ANNULLEREDE ORDRER
-                        """);
-
-                int choice2 = scan.nextInt();
-
-                switch (choice2) {
-
-                    case 1 -> {
-                        System.out.println("Antal pizzaer solgt: " + orderManager.getTotalPizzasSold());
-                        System.out.println("Omsætning: " + orderManager.getTotalIncome() + " kr.");
-                        System.out.println();
+                case 1 -> {
+                    chosenOrder.setReady();
+                    System.out.println("Ordren er nu klar");
+                }
+                case 2 -> {
+                    chosenOrder.setPaid();
+                    System.out.println("Ordren er nu betalt");
+                }
+                case 3 -> {
+                    if (chosenOrder.isPaid() && chosenOrder.isReady()) {
+                        chosenOrder.setPickedUp();
+                        System.out.println("Ordren er nu afhentet og afsluttet");
                     }
-                    case 2 -> orderManager.pizzaRanking(menu.getMenu());
+                    if (!chosenOrder.isPaid()) {
 
-                    case 3 -> orderManager.printCompletedOrders();
-
-                    case 4 -> {
-                        if (orderManager.cancelledOrders().isEmpty()){
-                            System.out.println("Ingen annullerede ordrer i systemet på nuværende tidspunkt" + "\n");
-                            break;
-                        }
-                        System.out.println("Anullerede ordrer" + "\n------------" + "\n" +
-                                orderManager.cancelledOrdersToString());
+                        System.out.println("Ordren mangler betaling!");
                     }
+                    if (!chosenOrder.isReady()) {
 
-                    default -> System.out.println("Fejl i input");
+                        System.out.println("Ordren er ikke klar!");
+
+                    }
+                    System.out.println();
                 }
 
+
+            case 4 -> {
+                chosenOrder.setCancelled();
+                System.out.println("Ordren blev annulleret.");
+
             }
 
-            default -> System.out.println("Fejl i input");
+            default -> System.out.println("Input fejl");
         }
+
     }
+
+}
+
+private void admin() {
+    System.out.println("""
+            1. ÆNDRE PRIS I MENU
+            2. STATISTIK
+            """);
+
+    int choice = scan.nextInt();
+
+    switch (choice) {
+        case 1 -> {
+            System.out.println(menu);
+            System.out.println("Hvilken pizza nr. vil du ændre prisen på?");
+            int productNumber = scan.nextInt() - 1;
+            Product chosenProduct = menu.getProductByNumber(productNumber);
+            System.out.println("Hvad skal den nye pris på " + chosenProduct.getPizza() + " være?");
+            int newPrice = scan.nextInt();
+            chosenProduct.setPrice(newPrice);
+            System.out.println("Prisen på " + chosenProduct.getPizza() + " er ændret til " + newPrice + " kr.");
+            System.out.println();
+        }
+        case 2 -> {
+            System.out.println("""
+                    1. OMSÆTNING
+                    2. MEST SOLGTE PRODUKTER
+                    3. AFSLUTTEDE ORDRER
+                    4. ANNULLEREDE ORDRER
+                    """);
+
+            int choice2 = scan.nextInt();
+
+            switch (choice2) {
+
+                case 1 -> {
+                    System.out.println("Antal pizzaer solgt: " + orderManager.getTotalPizzasSold());
+                    System.out.println("Omsætning: " + orderManager.getTotalIncome() + " kr.");
+                    System.out.println();
+                }
+                case 2 -> orderManager.pizzaRanking(menu.getMenu());
+
+                case 3 -> orderManager.printCompletedOrders();
+
+                case 4 -> {
+                    if (orderManager.cancelledOrders().isEmpty()) {
+                        System.out.println("Ingen annullerede ordrer i systemet på nuværende tidspunkt" + "\n");
+                        break;
+                    }
+                    System.out.println("Anullerede ordrer" + "\n------------" + "\n" +
+                            orderManager.cancelledOrdersToString());
+                }
+
+                default -> System.out.println("Fejl i input");
+            }
+
+        }
+
+        default -> System.out.println("Fejl i input");
+    }
+}
 }
 
 

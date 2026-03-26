@@ -6,6 +6,7 @@ public class Main {
 
         Menu menu = buildMenu();
         OrderManager orderManager = new OrderManager();
+        Customers customers = new Customers();
         Order order1 = new Order();
         Order order2 = new Order();
         Order order3 = new Order();
@@ -47,7 +48,7 @@ public class Main {
 
 
 
-        UserInterface ui = new UserInterface(menu, orderManager);
+        UserInterface ui = new UserInterface(menu, orderManager, customers);
         ui.start();
 
     }
