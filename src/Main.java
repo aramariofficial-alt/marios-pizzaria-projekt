@@ -7,6 +7,8 @@ public class Main {
         Menu menu = buildMenu();
         OrderManager orderManager = new OrderManager();
         Customers customers = new Customers();
+        CustomerProfile customer = new CustomerProfile("lars", 11223344, 1234);
+        customers.addCustomer(customer);
         Order order1 = new Order();
         Order order2 = new Order();
         Order order3 = new Order();
@@ -36,6 +38,7 @@ public class Main {
         order6.setPaid();
         order6.setReady();
         order6.setPickedUp();
+
 
 
         orderManager.addOrder(order1);

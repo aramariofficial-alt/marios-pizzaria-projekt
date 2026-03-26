@@ -42,10 +42,10 @@ public class UserInterface {
                     case 4 -> printActiveOrders();
                     case 5 -> admin();
                     case 6 -> quit = true;
-                    default -> System.out.println("Ugyldigt nummer, prøv igen: ");
+                    default -> System.out.println("Ugyldigt indtastning, prøv igen: ");
                 }
             } catch (InputMismatchException e) {
-                System.out.println("Ugyldigt nummer, prøv igen: ");
+                System.out.println("Ugyldigt indtastning, prøv igen: ");
                 scan.next();
             }
         }
@@ -67,20 +67,18 @@ public class UserInterface {
 
     private void payOrder() {
 
-        switch(choice)
-        chase 1 ->
         ArrayList<Order> activeOrders = this.orderManager.activeOrders();
 
         int count = 1;
-        int count2 = 0;
+        int count2 = 1;
 
         for (Order order : activeOrders) {
             if (!order.isPaid()) {
-                count2++;
-                if (count2 == 1) {
+                System.out.println(order);
+
+                if (count2 == activeOrders.size()) {
                     System.out.println("Hvilket ordrenummer skal betales?\n(Indtast 0 for at gå tilbage)\n");
                 }
-                System.out.println(order);
 
                 count--;
 
@@ -89,23 +87,59 @@ public class UserInterface {
                 return;
             }
             count++;
+            count2++;
         }
 
         while (true) {
-            int choice = scan.nextInt();
-            if (choice == 0) {
+            int orderNumber = scan.nextInt();
+            if (orderNumber == 0) {
                 return; //annullere betaling
             }
             for (Order order : activeOrders) {
-                if (order.getOrderNumber() == choice && !order.isPaid()) {
+                if (order.getOrderNumber() == orderNumber && !order.isPaid()) {
+                    System.out.println("1. GÆST\n2. BRUGER");
+                    int choice = scan.nextInt();
 
-                    double totalPrice = orderManager.getOrderTotal(choice);
-                    orderManager.payOrder(choice);
-                    System.out.println("Ordren er betalt!\nBeløb: " + totalPrice + " kr.\n");
-                    return;
+                        switch(choice){
+
+                        case 1 -> {
+                            double totalPrice = orderManager.getOrderTotal(orderNumber);
+                            orderManager.payOrder(orderNumber);
+                            System.out.println("Ordren er betalt!\nBeløb: " + totalPrice + " kr.\n");
+                            return;
+                            }
+                        case 2 -> {
+                            int phoneNumber;
+                            while(true) {
+                                System.out.println("Indtast telefonnummer: ");
+                                phoneNumber = scan.nextInt();
+                                System.out.println("Indtast password: ");
+                                int password = scan.nextInt();
+                                if (customers.isvalid(phoneNumber, password)){
+                                    break;
+                            }else{
+                                System.out.println("Forkert telefonnummer eller password, prøv igen: \n");
+                            }
+                            }
+
+                            for (CustomerProfile customerProfile : customers.getCustomers()) {
+                                    if (customerProfile.getPhoneNumber() == phoneNumber) {
+                                        customerProfile.addOrder(order);
+                                    }
+                                }
+                                order.setPaid();
+                                double totalPrice = orderManager.getOrderTotal(orderNumber);
+                                customerProfile.discount(totalPrice);
+                                System.out.println("Ordren er betalt!\nBeløb: " + totalPrice + " kr.\n");
+                                return;
+                            }
+
+                            default -> System.out.println("Ugyldig indtastning,prøv igen!\n");
+
+                    }
                 }
             }
-            System.out.println("Forkert indtastning, prøv igen!\n (Indtast 0 for at gå tilbage)");
+            System.out.println("Ugyldig indtastning, prøv igen!\n (Indtast 0 for at gå tilbage)");
         }
     }
 
@@ -121,7 +155,7 @@ public class UserInterface {
                 System.out.println("Indtast nummer på pizza: ");
                 int productNumber = scan.nextInt() - 1;
                 while (productNumber > menu.getProductCount()) {
-                    System.out.println("Ugyldigt nummer, prøve igen");
+                    System.out.println("Ugyldigt indtastning, prøve igen");
                     productNumber = scan.nextInt();
                 }
 
@@ -204,7 +238,7 @@ public class UserInterface {
                 }
             }
         } catch (InputMismatchException e) {
-            System.out.println("Ugyldigt nummer, prøv igen: ");
+            System.out.println("Ugyldigt indtastning, prøv igen: ");
             scan.next();
         }
 
@@ -308,7 +342,7 @@ public class UserInterface {
 
             }
 
-            default -> System.out.println("Input fejl");
+            default -> System.out.println("Ugyldig indtastning, prøv igen: \n");
         }
 
     }
@@ -371,12 +405,12 @@ private void admin() {
 
                 }
 
-                default -> System.out.println("Fejl i input");
+                default -> System.out.println("Ugyldig indtastning, prøv igen: \n");
             }
 
         }
 
-        default -> System.out.println("Fejl i input");
+        default -> System.out.println("Ugyldig indtastning, prøv igen: \n");
     }
 }
 }
