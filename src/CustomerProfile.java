@@ -44,11 +44,6 @@ public class CustomerProfile {
         return profileOrders;
     }
 
-    public double discount(double orderTotal){
-        return orderTotal * 0.9;
-
-    }
-
     public void addOrder(Order order) {
         profileOrders.add(order);
     }

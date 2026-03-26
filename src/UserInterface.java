@@ -128,11 +128,13 @@ public class UserInterface {
                                 }
                             }
                             order.setPaid();
-                            order.setDiscount();
                             double totalPrice = orderManager.getOrderTotal(orderNumber);
+                            System.out.println("Ordren er betalt!\nFørpris: " + totalPrice + " kr.\n");
 
-                            System.out.println("Ordren er betalt!\nBeløb: " + totalPrice + " kr.\n" +
-                                    "Du har nu fået 10% rabat :)\n");
+                            order.setDiscount();
+                            double discount = orderManager.getOrderTotal(orderNumber);
+
+                            System.out.println("Nypris med 10% rabat: " + discount + " kr.\n");
                             return;
                         }
 
@@ -230,7 +232,15 @@ public class UserInterface {
                                     }
                                 }
                                 order.setPaid();
+                                double totalPrice = order.getTotal();
+                                System.out.println("Ordren er betalt!\nFørpris: " + totalPrice + " kr.\n");
+
                                 order.setDiscount();
+                                double discount = order.getTotal();
+
+                                System.out.println("Nypris med 10% rabat: " + discount + " kr.\n");
+                                return;
+
                             } else {
                                 System.out.println("Brugeren eksisterer ikke i systemet");
                             }
