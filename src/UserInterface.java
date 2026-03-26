@@ -52,11 +52,13 @@ public class UserInterface {
     }
 
     private void newCustomer(){
+        System.out.println("Indtast navn: ");
+        String name = scan.next();
         System.out.println("Indtast telefonnummer: ");
         int phoneNumber = scan.nextInt();
         System.out.println("Indtast password: ");
         int password = scan.nextInt();
-        CustomerProfile newCustomer = new CustomerProfile(phoneNumber, password);
+        CustomerProfile newCustomer = new CustomerProfile(name, phoneNumber, password);
         customers.addCustomer(newCustomer);
 
         System.out.println("Brugeren blev oprettet!\n");
@@ -165,7 +167,7 @@ public class UserInterface {
                             BETALING:
                             1. NU
                             2. SENERE
-                            3. MED BRUGER
+                            3. NU MED BRUGER
                             """);
 
                     switch(scan.nextInt()){
@@ -180,22 +182,23 @@ public class UserInterface {
                             int phoneNumber = scan.nextInt();
                             System.out.println("Indtast password: ");
                             int password = scan.nextInt();
+
+                            if (customers.isvalid(phoneNumber, password)){
+                                for (CustomerProfile customerProfile : customers.getCustomers() ){
+                                    if (customerProfile.getPhoneNumber() == phoneNumber){
+                                        customerProfile.addOrder(order);
+                                    }
+                                }
+                                order.setPaid();
+                            } else {
+                                System.out.println("Brugeren eksisterer ikke i systemet");
+                            }
                         }
 
                             default ->  System.out.println("Fejl i input");
                     }
-//
-//                    System.out.println("Betal nu? (ja/nej)");
-//                    if (scan.next().equalsIgnoreCase("ja")) {
-//                        order.setPaid();
-//                        System.out.println("Betaling godkendt\n");
-//                    }
-
                     orderDone = true;
                 }
-//                else {
-//                    System.out.println("Fejl i input");
-//                }
             }
         } catch (InputMismatchException e) {
             System.out.println("Ugyldigt nummer, prøv igen: ");
@@ -335,6 +338,7 @@ private void admin() {
                     2. MEST SOLGTE PRODUKTER
                     3. AFSLUTTEDE ORDRER
                     4. ANNULLEREDE ORDRER
+                    5. EKSISTERENDE BRUGERE
                     """);
 
             int choice2 = scan.nextInt();
@@ -357,6 +361,11 @@ private void admin() {
                     }
                     System.out.println("Anullerede ordrer" + "\n------------" + "\n" +
                             orderManager.cancelledOrdersToString());
+                }
+                case 5 -> {
+                    System.out.println(customers.toString());
+
+
                 }
 
                 default -> System.out.println("Fejl i input");

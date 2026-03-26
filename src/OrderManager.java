@@ -53,29 +53,70 @@ public class OrderManager {
         }
         return completedOrders;
     }
+
+
+
+
+
+
+
     public void pizzaRanking(ArrayList<Product> menu){
+
+        // tom liste som skal holde styr på antal solgte pizzaer
         ArrayList<OrderLine> mostSellingProduct = new ArrayList<>();
 
+        // for hvert produkt i menuen:
+        // lav en "tæller" (OrderLine) med quantity 0
         for(Product product : menu){
             OrderLine orderline = new OrderLine(0, product);
             mostSellingProduct.add(orderline);
         }
+
+        // gå gennem alle færdige ordrer
         for(Order order : completedOrders()){
+
+            // gå gennem hver orderline i ordren
             for(OrderLine orderline : order.getOrderLines()){
+
+                // find den samme pizza i vores tælleliste
                 for(OrderLine pizza : mostSellingProduct){
+
+                    // hvis det er samme pizza
                     if(orderline.getPizza().equals(pizza.getPizza())) {
-                        pizza.setQuantity(orderline.getQuantity() + pizza.getQuantity());
-                        break;
+
+                        // læg antal til (akkumuler)
+                        pizza.setQuantity(
+                                pizza.getQuantity() + orderline.getQuantity()
+                        );
+
+                        break; // stop når vi har fundet den rigtige pizza
                     }
                 }
             }
         }
+
         mostSellingProduct.sort(Comparator.comparing(OrderLine :: getQuantity).reversed());
         for(OrderLine orderline : mostSellingProduct){
             System.out.println(orderline);
             System.out.println();
         }
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     public void printCompletedOrders(){
         for(Order order : completedOrders()){
             System.out.println(order);

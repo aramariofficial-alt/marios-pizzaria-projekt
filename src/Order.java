@@ -1,9 +1,12 @@
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class Order {
     private final ArrayList<OrderLine> list = new ArrayList<>();
+
+
     private final LocalDateTime timeOfOrder = LocalDateTime.now();
     private LocalDateTime pickUpTime;
     private final DateTimeFormatter formatter =
@@ -16,6 +19,9 @@ public class Order {
     private boolean isPickedUp;
     private int orderNumber;
 
+    public ArrayList<OrderLine> getList() {
+        return list;
+    }
     public LocalDateTime getPickUpTime(){
         return pickUpTime;
     }
@@ -120,6 +126,7 @@ public class Order {
         return result;
     }
 
+
     public int getQuantity() {
         int quantity = 0;
         for (OrderLine orderline : list) {
@@ -139,6 +146,7 @@ public class Order {
         }
         return h;
     }
+
 
     @Override
     public String toString() {
