@@ -66,6 +66,9 @@ public class UserInterface {
     }
 
     private void payOrder() {
+
+        switch(choice)
+        chase 1 ->
         ArrayList<Order> activeOrders = this.orderManager.activeOrders();
 
         int count = 1;
